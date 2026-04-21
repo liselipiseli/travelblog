@@ -5,12 +5,429 @@ layout: null
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>{{ page.title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} — Bricks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --ink: #0f0f0f;
+      --blue: #a8c4d4;
+      --blue-light: #daeaf3;
+      --blue-mid: #7aafc4;
+      --muted: #999;
+      --border: #e0ddd8;
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.8rem 3rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .nav-back {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--blue-mid); }
+
+    /* HERO */
+    .post-hero {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 60vh;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post-hero-image {
+      background: linear-gradient(160deg, #a8c4d4, #5a90aa);
+      position: relative;
+      overflow: hidden;
+      min-height: 400px;
+      border-right: 1px solid var(--border);
+    }
+
+    .post-hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+      opacity: 0.85;
+    }
+
+    .post-hero-meta {
+      padding: 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .post-region {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+
+    .post-title {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .post-date-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+
+    .post-date {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .post-tag {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--blue);
+      color: var(--blue-mid);
+      background: var(--blue-light);
+    }
+
+    /* CONTENT */
+    .post-content-wrap {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post-sidebar {
+      padding: 3rem;
+      border-right: 1px solid var(--border);
+      position: sticky;
+      top: 80px;
+      align-self: start;
+    }
+
+    .sidebar-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .sidebar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .sidebar-item {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+
+    .sidebar-item-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .sidebar-item-value {
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+
+    .post-body {
+      padding: 3rem 4rem;
+      max-width: 720px;
+    }
+
+    /* TYPOGRAPHY */
+    .post-body p {
+      font-size: 0.95rem;
+      line-height: 2;
+      color: #444;
+      font-weight: 300;
+      margin-bottom: 1.8rem;
+    }
+
+    .post-body h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin: 3rem 0 1.2rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .post-body h3 {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem;
+      color: var(--ink);
+    }
+
+    .post-body blockquote {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      line-height: 1.6;
+      color: var(--ink);
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    .post-body blockquote p {
+      font-size: 1.4rem;
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      color: var(--ink);
+      font-weight: 400;
+      margin: 0;
+    }
+
+    /* BILDER */
+    .post-body img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 2.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .post-body img + em {
+      display: block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-top: -2rem;
+      margin-bottom: 2.5rem;
+      font-style: normal;
+    }
+
+    /* VIDEOS */
+    .post-body iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: 1px solid var(--border);
+      margin: 2.5rem 0;
+      display: block;
+    }
+
+    /* TRENNLINIE */
+    .post-body hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    /* NAVIGATION ZWISCHEN BEITRÄGEN */
+    .post-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--border);
+    }
+
+    .post-nav-item {
+      padding: 2.5rem 3rem;
+      text-decoration: none;
+      color: var(--ink);
+      transition: background 0.2s;
+      border-right: 1px solid var(--border);
+    }
+
+    .post-nav-item:last-child { border-right: none; text-align: right; }
+    .post-nav-item:hover { background: var(--blue-light); }
+
+    .post-nav-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-nav-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    /* FOOTER */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .footer-copy {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .post-hero { grid-template-columns: 1fr; }
+      .post-hero-image { min-height: 260px; }
+      .post-content-wrap { grid-template-columns: 1fr; }
+      .post-sidebar { position: static; border-right: none; border-bottom: 1px solid var(--border); }
+      .post-body { padding: 2rem 1.5rem; }
+    }
+  </style>
 </head>
 <body>
-  <a href="/travelblog/">← Zurück</a>
-  <h1>{{ page.title }}</h1>
-  <p>{{ page.date | date: "%d.%m.%Y" }}</p>
-  {{ content }}
+
+<nav>
+  <a href="{{ site.baseurl }}/" class="nav-logo">Bricks</a>
+  <a href="{{ site.baseurl }}/" class="nav-back">← Alle Reisen</a>
+</nav>
+
+<!-- HERO -->
+<div class="post-hero">
+  <div class="post-hero-image">
+    {% if page.cover_image %}
+      <img src="{{ site.baseurl }}/assets/images/{{ page.cover_image }}" alt="{{ page.title }}">
+    {% endif %}
+  </div>
+  <div class="post-hero-meta">
+    <span class="post-region">{{ page.region }}</span>
+    <h1 class="post-title">{{ page.title }}</h1>
+    <div class="post-date-row">
+      <span class="post-date">{{ page.date | date: "%d. %B %Y" }}</span>
+      {% if page.region %}<span class="post-tag">{{ page.region }}</span>{% endif %}
+      {% if page.tags %}
+        {% for tag in page.tags %}
+          <span class="post-tag" style="border-color:var(--border);color:var(--muted);background:none;">{{ tag }}</span>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- INHALT -->
+<div class="post-content-wrap">
+  <aside class="post-sidebar">
+    <span class="sidebar-label">Details</span>
+    <div class="sidebar-info">
+      {% if page.region %}
+      <div class="sidebar-item">
+        <div class="sidebar-item-label">Region</div>
+        <div class="sidebar-item-value">{{ page.region }}</div>
+      </div>
+      {% endif %}
+      {% if page.cities %}
+      <div class="sidebar-item">
+        <div class="sidebar-item-label">Orte</div>
+        <div class="sidebar-item-value">{{ page.cities | join: ", " }}</div>
+      </div>
+      {% endif %}
+      {% if page.duration %}
+      <div class="sidebar-item">
+        <div class="sidebar-item-label">Dauer</div>
+        <div class="sidebar-item-value">{{ page.duration }}</div>
+      </div>
+      {% endif %}
+      {% if page.season %}
+      <div class="sidebar-item">
+        <div class="sidebar-item-label">Jahreszeit</div>
+        <div class="sidebar-item-value">{{ page.season }}</div>
+      </div>
+      {% endif %}
+    </div>
+  </aside>
+
+  <article class="post-body">
+    {{ content }}
+  </article>
+</div>
+
+<!-- NAVIGATION ZWISCHEN BEITRÄGEN -->
+<div class="post-nav">
+  <div>
+    {% if page.previous.url %}
+    <a href="{{ site.baseurl }}{{ page.previous.url }}" class="post-nav-item">
+      <span class="post-nav-label">← Vorheriger Beitrag</span>
+      <span class="post-nav-title">{{ page.previous.title }}</span>
+    </a>
+    {% endif %}
+  </div>
+  <div>
+    {% if page.next.url %}
+    <a href="{{ site.baseurl }}{{ page.next.url }}" class="post-nav-item">
+      <span class="post-nav-label">Nächster Beitrag →</span>
+      <span class="post-nav-title">{{ page.next.title }}</span>
+    </a>
+    {% endif %}
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo">Bricks</span>
+  <span class="footer-copy">© 2024 Travel Blog von Lisa</span>
+</footer>
+
 </body>
 </html>
