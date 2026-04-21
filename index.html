@@ -794,7 +794,29 @@ layout: null
     <p class="section-desc">Persönliche Einträge aus dem Reisetagebuch.</p>
   </div>
   <div class="section-body" style="padding:0;">
-    <div class="post-wrapper">
+    <div class="{% for post in site.posts %}
+<div class="post-wrapper" style="border-bottom: 1px solid var(--border);">
+  <div class="post-image-side">
+    <div class="post-img-bg"></div>
+    <div class="post-img-meta">
+      <p class="post-img-sub">{{ post.date | date: "%d. %B %Y" }} · {{ post.region }}</p>
+      <h2 class="post-img-title">{{ post.title }}</h2>
+    </div>
+  </div>
+  <div class="post-text-side">
+    <div class="post-tags">
+      <span class="tag blue">{{ post.region }}</span>
+    </div>
+    <div class="post-body">
+      {{ post.excerpt }}
+      <a href="{{ post.url | prepend: site.baseurl }}" 
+         style="display:inline-block;margin-top:1.5rem;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--blue-mid);text-decoration:none;">
+        Weiterlesen →
+      </a>
+    </div>
+  </div>
+</div>
+{% endfor %}">
       <div class="post-image-side">
         <div class="post-img-bg"></div>
         <div class="post-img-meta">
