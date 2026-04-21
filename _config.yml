@@ -1,0 +1,6 @@
+title: Travel Blog von Lisa
+baseurl: "/travelblog"
+url: "https://liselipiseli.github.io"
+permalink: /:year/:month/:day/:title/
+plugins:
+  - jekyll-feed
