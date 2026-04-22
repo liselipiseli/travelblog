@@ -245,8 +245,7 @@ layout: null
 <div class="image-strip">
   {% for post in site.posts limit:4 %}
   <a href="{{ site.baseurl }}{{ post.url }}" class="strip-img" style="text-decoration:none;">
-    <div class="strip-img-inner" style="background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});
-      {% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}');{% endif %}"></div>
+    <div class="strip-img-inner" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: center;{% else %}background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
     <div class="strip-label">{{ post.title }} — {{ post.date | date: "%b %Y" }}</div>
   </a>
   {% endfor %}
@@ -316,8 +315,7 @@ layout: null
     <div class="gallery-grid">
       {% for post in site.posts limit:7 %}
       <a class="gal-item" href="{{ site.baseurl }}{{ post.url }}" style="text-decoration:none;">
-        <div class="gal-inner" style="background: linear-gradient(140deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});
-          {% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}');{% endif %}"></div>
+        <div class="gal-inner" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: center;{% else %}background: linear-gradient(140deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
         <div class="gal-label">{{ post.title }}</div>
       </a>
       {% endfor %}
@@ -336,8 +334,7 @@ layout: null
     {% for post in site.posts %}
     <div class="post-wrapper">
       <div class="post-image-side">
-        <div class="post-img-bg" style="background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});
-          {% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}');{% endif %}"></div>
+        <div class="post-img-bg" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: center;{% else %}background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
         <div class="post-img-meta">
           <p class="post-img-sub">{{ post.date | date: "%d. %B %Y" }}{% if post.region %} · {{ post.region }}{% endif %}</p>
           <h2 class="post-img-title">{{ post.title }}</h2>
