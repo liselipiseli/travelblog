@@ -1,0 +1,378 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.region }} — Bricks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --ink: #0f0f0f;
+      --blue: #a8c4d4;
+      --blue-light: #daeaf3;
+      --blue-mid: #7aafc4;
+      --muted: #999;
+      --border: #e0ddd8;
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.8rem 3rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .nav-back {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--blue-mid); }
+
+    /* HERO */
+    .region-hero {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+      min-height: 40vh;
+    }
+
+    .region-hero-col {
+      border-right: 1px solid var(--border);
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .region-hero-col:last-child { border-right: none; }
+
+    .region-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+
+    .region-title {
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .region-title em {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--blue-mid);
+    }
+
+    .region-stat {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .stat-n { font-size: 3rem; font-weight: 700; letter-spacing: -0.05em; line-height: 1; }
+    .stat-l { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); text-align: right; padding-bottom: 0.3rem; }
+
+    .region-blue-block {
+      background: var(--blue-light);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: flex-end;
+      min-height: 120px;
+    }
+
+    .region-blue-text {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--blue-mid);
+      line-height: 1.6;
+    }
+
+    /* BEITRÄGE */
+    .section-row {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-sidebar {
+      padding: 3rem;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .section-num { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; }
+    .section-name { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; text-transform: uppercase; }
+    .section-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-top: 0.5rem; font-weight: 300; }
+
+    /* TRIP LISTE */
+    .trips-list { display: flex; flex-direction: column; padding: 0 3rem; }
+
+    .trip-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 140px 80px;
+      align-items: center;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--border);
+      gap: 2rem;
+      text-decoration: none;
+      color: var(--ink);
+      transition: background 0.2s, padding 0.2s, margin 0.2s;
+    }
+
+    .trip-row:last-child { border-bottom: none; }
+    .trip-row:hover { background: var(--blue-light); margin: 0 -3rem; padding: 1.8rem 3rem; }
+
+    .trip-index { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.12em; }
+    .trip-info h3 { font-size: 1rem; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+    .trip-cities { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .trip-city { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); border: 1px solid var(--border); padding: 0.15rem 0.55rem; }
+    .trip-date { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
+    .trip-arrow { font-size: 0.85rem; color: var(--border); text-align: right; transition: color 0.2s, transform 0.2s; }
+    .trip-row:hover .trip-arrow { color: var(--blue-mid); transform: translateX(4px); }
+
+    /* GALERIE */
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+    .gal-item { aspect-ratio: 1; overflow: hidden; cursor: pointer; position: relative; }
+    .gal-item:nth-child(1) { grid-column: span 2; aspect-ratio: 2/1; }
+    .gal-inner { width: 100%; height: 100%; transition: transform 0.5s ease; background-size: cover; background-position: center; }
+    .gal-item:hover .gal-inner { transform: scale(1.04); }
+    .gal-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 1rem 0.8rem; background: linear-gradient(to top, rgba(15,15,15,0.7), transparent); font-size: 0.65rem; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.12em; opacity: 0; transition: opacity 0.3s; }
+    .gal-item:hover .gal-label { opacity: 1; }
+
+    /* KEINE BEITRÄGE */
+    .empty-state {
+      padding: 4rem 3rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 300;
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+    }
+
+    /* ANDERE REGIONEN */
+    .other-regions {
+      display: flex;
+      overflow-x: auto;
+      border-top: 1px solid var(--border);
+    }
+
+    .other-region-item {
+      flex: 1;
+      padding: 2rem 2.5rem;
+      border-right: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--ink);
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .other-region-item:last-child { border-right: none; }
+    .other-region-item:hover { background: var(--blue-light); }
+
+    .other-region-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .other-region-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    /* FOOTER */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-logo { font-size: 1rem; font-weight: 700; letter-spacing: -0.04em; text-transform: uppercase; }
+    .footer-copy { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.08em; }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .region-hero { grid-template-columns: 1fr; }
+      .section-row { grid-template-columns: 1fr; }
+      .section-sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+      .trip-row { grid-template-columns: 40px 1fr 60px; }
+      .trip-date { display: none; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gal-item:nth-child(1) { grid-column: span 2; }
+    }
+  </style>
+</head>
+<body>
+
+{% assign region_posts = site.posts | where: 'region', page.region %}
+
+<nav>
+  <a href="{{ site.baseurl }}/" class="nav-logo">Bricks</a>
+  <a href="{{ site.baseurl }}/" class="nav-back">← Zurück</a>
+</nav>
+
+<!-- HERO -->
+<div class="region-hero">
+  <div class="region-hero-col">
+    <span class="region-label">Region</span>
+    <div class="region-title">{{ page.region | split: '' | first }}<em>{{ page.region | slice: 1, 100 }}</em></div>
+    <span class="region-label"></span>
+  </div>
+  <div class="region-hero-col" style="padding:0;display:flex;flex-direction:column;">
+    <div style="padding:2.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;flex:1;">
+      <div class="stat-l">Reisen</div>
+      <div class="stat-n">{{ region_posts | size }}</div>
+    </div>
+    <div style="padding:2.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;flex:1;">
+      <div class="stat-l">Städte</div>
+      <div class="stat-n">{{ region_posts | map: 'cities' | join: ',' | split: ',' | uniq | size }}</div>
+    </div>
+    <div class="region-blue-block">
+      <p class="region-blue-text">Alle Reisen<br>aus {{ page.region }}.</p>
+    </div>
+  </div>
+  <div class="region-hero-col">
+    <span class="region-label">Zuletzt besucht</span>
+    {% assign latest = region_posts | first %}
+    {% if latest %}
+    <div>
+      <p style="font-size:1rem;font-weight:500;letter-spacing:-0.02em;margin-bottom:0.5rem;">{{ latest.title }}</p>
+      <p style="font-size:0.75rem;color:var(--muted);font-weight:300;">{{ latest.date | date: "%B %Y" }}</p>
+    </div>
+    {% endif %}
+    <span class="region-label"></span>
+  </div>
+</div>
+
+<!-- BEITRÄGE -->
+<div class="section-row">
+  <div class="section-sidebar">
+    <span class="section-num">01</span>
+    <div class="section-name">Reisen</div>
+    <p class="section-desc">Alle Einträge aus {{ page.region }}.</p>
+  </div>
+  <div class="section-body" style="padding:0;">
+    {% if region_posts.size > 0 %}
+    <div class="trips-list">
+      {% for post in region_posts %}
+      <a class="trip-row" href="{{ site.baseurl }}{{ post.url }}">
+        <span class="trip-index">{{ forloop.index | prepend: '00' | slice: -3, 3 }}</span>
+        <div class="trip-info">
+          <h3>{{ post.title }}</h3>
+          <div class="trip-cities">
+            {% for city in post.cities %}
+            <span class="trip-city">{{ city }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        <span class="trip-date">{{ post.date | date: "%B %Y" }}</span>
+        <span class="trip-arrow">→</span>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">Noch keine Reisen in dieser Region.</div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- GALERIE -->
+<div class="section-row" style="border-bottom:none;">
+  <div class="section-sidebar">
+    <span class="section-num">02</span>
+    <div class="section-name">Galerie</div>
+    <p class="section-desc">Bilder aus {{ page.region }}.</p>
+  </div>
+  <div class="section-body">
+    {% if region_posts.size > 0 %}
+    <div class="gallery-grid">
+      {% for post in region_posts limit:6 %}
+      <a class="gal-item" href="{{ site.baseurl }}{{ post.url }}" style="text-decoration:none;">
+        <div class="gal-inner" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: {{ post.cover_position | default: 'center 60%' }};{% else %}background: linear-gradient(140deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
+        <div class="gal-label">{{ post.title }}</div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p style="font-size:0.85rem;color:var(--muted);font-weight:300;">Noch keine Bilder vorhanden.</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- ANDERE REGIONEN -->
+{% assign all_regions = site.posts | map: 'region' | uniq | sort %}
+{% assign other_regions = all_regions | where_exp: 'r', 'r != page.region' %}
+{% if other_regions.size > 0 %}
+<div class="other-regions">
+  <div style="padding:1.2rem 2rem;border-right:1px solid var(--border);display:flex;align-items:center;">
+    <span style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--muted);white-space:nowrap;">Andere Regionen</span>
+  </div>
+  {% for r in other_regions %}
+  <a class="other-region-item" href="{{ site.baseurl }}/region/{{ r | downcase | replace: ' ', '-' }}/">
+    <span class="other-region-label">{{ site.posts | where: 'region', r | size }} Reisen</span>
+    <span class="other-region-name">{{ r }} →</span>
+  </a>
+  {% endfor %}
+</div>
+{% endif %}
+
+<footer>
+  <span class="footer-logo">Bricks</span>
+  <span class="footer-copy">© {{ 'now' | date: "%Y" }} Travel Blog von Lisa</span>
+</footer>
+
+</body>
+</html>
