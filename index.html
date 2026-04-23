@@ -164,9 +164,22 @@ layout: null
   footer h4 { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 1.5rem; font-weight: 400; }
   footer ul { list-style: none; }
   footer ul li { margin-bottom: 0.7rem; }
-  footer ul a { text-decoration: none; color: var(--ink); font-size: 0.82rem; font-weight: 300; transition: color 0.2s; }
-  footer ul a:hover { color: var(--blue-mid); }
+  footer ul a, footer ul button { text-decoration: none; color: var(--ink); font-size: 0.82rem; font-weight: 300; transition: color 0.2s; background: none; border: none; cursor: pointer; font-family: inherit; padding: 0; }
+  footer ul a:hover, footer ul button:hover { color: var(--blue-mid); }
   .footer-copy { font-size: 0.65rem; color: var(--muted); margin-top: 2rem; letter-spacing: 0.08em; }
+
+  /* IMPRESSUM MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,15,15,0.5); z-index: 999; backdrop-filter: blur(4px); }
+  .modal-overlay.open { display: flex; align-items: center; justify-content: center; }
+  .modal-box { background: var(--bg); border: 1px solid var(--border); max-width: 560px; width: 90%; max-height: 80vh; overflow-y: auto; }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); }
+  .modal-title { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; }
+  .modal-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--muted); transition: color 0.2s; line-height: 1; }
+  .modal-close:hover { color: var(--ink); }
+  .modal-body { padding: 2.5rem; }
+  .modal-body h3 { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.5rem; margin-top: 1.5rem; }
+  .modal-body h3:first-child { margin-top: 0; }
+  .modal-body p { font-size: 0.85rem; line-height: 1.8; color: #555; font-weight: 300; }
 
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
@@ -357,6 +370,26 @@ layout: null
   </div>
 </div>
 
+<!-- IMPRESSUM MODAL -->
+<div class="modal-overlay" id="impressumModal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">Impressum</span>
+      <button class="modal-close" onclick="document.getElementById('impressumModal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h3>Angaben gemäß § 5 TMG</h3>
+      <p>Lisa Schmer<br>Reisetagebuch — Bricks<br>Deutschland</p>
+      <h3>Kontakt</h3>
+      <p>E-Mail: <a href="mailto:lisa.schmer@icloud.com" style="color:var(--blue-mid);">lisa.schmer@icloud.com</a></p>
+      <h3>Verantwortlich für den Inhalt</h3>
+      <p>Lisa Schmer</p>
+      <h3>Haftungsausschluss</h3>
+      <p>Diese Website ist ein privates Reisetagebuch ohne kommerzielle Absicht. Alle Inhalte wurden nach bestem Wissen und Gewissen erstellt. Für externe Links wird keine Haftung übernommen.</p>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="footer-col">
     <div class="footer-logo">Bricks</div>
@@ -366,7 +399,7 @@ layout: null
   <div class="footer-col">
     <h4>Navigation</h4>
     <ul>
-      <li><a href="#">Startseite</a></li>
+      <li><a href="{{ site.baseurl }}/">Startseite</a></li>
       <li><a href="#karte">Weltkarte</a></li>
       <li><a href="#reisen">Alle Reisen</a></li>
       <li><a href="#galerie">Galerie</a></li>
@@ -378,16 +411,16 @@ layout: null
     <ul>
       {% assign regions = site.posts | map: 'region' | uniq | sort %}
       {% for region in regions %}
-      <li><a href="#">{{ region }}</a></li>
+      <li><a href="{{ site.baseurl }}/region/{{ region | downcase | replace: ' ', '-' }}/">{{ region }}</a></li>
       {% endfor %}
     </ul>
   </div>
   <div class="footer-col">
     <h4>Kontakt</h4>
     <ul>
-      <li><a href="#">Instagram</a></li>
-      <li><a href="#">E-Mail</a></li>
-      <li><a href="#">Impressum</a></li>
+      <li><a href="https://www.instagram.com/liselipiseli/" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="mailto:lisa.schmer@icloud.com">E-Mail</a></li>
+      <li><button onclick="document.getElementById('impressumModal').classList.add('open')">Impressum</button></li>
     </ul>
   </div>
 </footer>
@@ -425,6 +458,12 @@ posts.forEach(p => {
 });
 
 // REGION FILTER
+function closeModal(e) {
+  if (e.target === document.getElementById('impressumModal')) {
+    document.getElementById('impressumModal').classList.remove('open');
+  }
+}
+
 function filterRegion(region, btn) {
   document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
