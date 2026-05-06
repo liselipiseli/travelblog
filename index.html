@@ -676,6 +676,7 @@ function runSearch(q) {
   const hits = allPosts.filter(p =>
     (p.title && p.title.toLowerCase().includes(term)) ||
     (p.region && p.region.toLowerCase().includes(term)) ||
+    (p.country && p.country.toLowerCase().includes(term)) ||
     (p.cities && p.cities.join(' ').toLowerCase().includes(term)) ||
     (p.tags && p.tags.join(' ').toLowerCase().includes(term))
   );
