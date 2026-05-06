@@ -335,6 +335,36 @@ layout: null
   .modal-body h3:first-child { margin-top: 0; }
   .modal-body p { font-size: 0.85rem; line-height: 1.8; color: #555; font-weight: 300; }
 
+  /* ZURÜCK NACH OBEN */
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 100;
+    transform: translateY(10px);
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+
+  .back-to-top:hover { background: var(--blue-mid); }
+
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--blue); }
@@ -554,6 +584,9 @@ layout: null
   </div>
 </div>
 
+<!-- ZURÜCK NACH OBEN -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
 <!-- IMPRESSUM MODAL -->
 <div class="modal-overlay" id="impressumModal" onclick="closeModal(event)">
   <div class="modal-box">
@@ -610,6 +643,12 @@ layout: null
 </footer>
 
 <script>
+// ZURÜCK NACH OBEN
+const btt = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('visible', window.scrollY > 400);
+});
+
 // BURGER MENU
 function toggleMenu() {
   const m = document.getElementById('mobileMenu');
@@ -639,7 +678,6 @@ const allPosts = [
   {
     title: {{ post.title | jsonify }},
     region: {{ post.region | jsonify }},
-  country: {{ post.country | jsonify }},
     cities: {{ post.cities | jsonify }},
     tags: {{ post.tags | jsonify }},
     date: "{{ post.date | date: '%B %Y' }}",
@@ -676,7 +714,6 @@ function runSearch(q) {
   const hits = allPosts.filter(p =>
     (p.title && p.title.toLowerCase().includes(term)) ||
     (p.region && p.region.toLowerCase().includes(term)) ||
-    (p.country && p.country.toLowerCase().includes(term)) ||
     (p.cities && p.cities.join(' ').toLowerCase().includes(term)) ||
     (p.tags && p.tags.join(' ').toLowerCase().includes(term))
   );
