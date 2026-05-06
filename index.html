@@ -639,6 +639,7 @@ const allPosts = [
   {
     title: {{ post.title | jsonify }},
     region: {{ post.region | jsonify }},
+  country: {{ post.country | jsonify }},
     cities: {{ post.cities | jsonify }},
     tags: {{ post.tags | jsonify }},
     date: "{{ post.date | date: '%B %Y' }}",
