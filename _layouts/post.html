@@ -378,6 +378,12 @@ layout: null
         <div class="sidebar-item-value">{{ page.region }}</div>
       </div>
       {% endif %}
+      {% if page.country %}
+<div class="sidebar-item">
+  <div class="sidebar-item-label">Land</div>
+  <div class="sidebar-item-value">{{ page.country }}</div>
+</div>
+{% endif %}
       {% if page.cities %}
       <div class="sidebar-item">
         <div class="sidebar-item-label">Orte</div>
