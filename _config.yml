@@ -2,5 +2,12 @@ title: Travel Blog von Lisa
 baseurl: "/travelblog"
 url: "https://liselipiseli.github.io"
 permalink: /:year/:month/:day/:title/
+
+# RSS Feed
+feed:
+  path: feed.xml
+  posts_limit: 20
+
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
