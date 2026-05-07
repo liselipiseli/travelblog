@@ -114,9 +114,6 @@ layout: null
     .related-region { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 0.5rem; }
     .related-title { font-size: 0.9rem; font-weight: 500; letter-spacing: -0.02em; }
 
-    /* KOMMENTARE */
-    .comments-wrap { border-top: 1px solid var(--border); padding: 3rem; }
-    .comments-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 2rem; }
 
     /* NEWSLETTER */
     .newsletter {
@@ -136,6 +133,21 @@ layout: null
     .newsletter-btn { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.9rem 2rem; background: var(--ink); color: var(--bg); border: none; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
     .newsletter-btn:hover { background: var(--blue-mid); }
     .newsletter-note { font-size: 0.65rem; color: var(--muted); }
+    <form
+  action="https://buttondown.com/api/emails/embed-subscribe/liselipiseli"
+  method="post"
+  class="embeddable-buttondown-form"
+>
+  <label for="bd-email">Enter your email</label>
+  <input type="email" name="email" id="bd-email" />
+  <input type="text" name="metadata__first_name" id="first_name" />
+  <input type="text" name="metadata__gender" id="gender" />
+  <input type="submit" value="Subscribe" />
+  <p>
+    <a href="https://buttondown.com/refer/liselipiseli" target="_blank">
+    </a>
+  </p>
+</form>
 
     /* BEITRAGS-NAVIGATION */
     .post-nav { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
