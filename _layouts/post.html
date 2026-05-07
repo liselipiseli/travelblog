@@ -3,11 +3,12 @@ layout: null
 ---
 <!DOCTYPE html>
 <html lang="de">
-<head>{% include head.html %}
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} — Bricks</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  {% include head.html %}
   <style>
     :root {
       --bg: #f7f5f0;
@@ -30,6 +31,15 @@ layout: null
       font-size: 14px;
     }
 
+    body.dark {
+      --bg: #0f0f0f;
+      --ink: #f7f5f0;
+      --blue-light: #1a2a33;
+      --blue-mid: #7aafc4;
+      --muted: #666;
+      --border: #2a2a2a;
+    }
+
     /* NAV */
     nav {
       position: fixed;
@@ -43,25 +53,12 @@ layout: null
       border-bottom: 1px solid var(--border);
     }
 
-    .nav-logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--ink);
-    }
-
-    .nav-back {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    .nav-logo { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.04em; text-transform: uppercase; text-decoration: none; color: var(--ink); }
+    .nav-back { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-back:hover { color: var(--blue-mid); }
+
+    .nav-btn { background: none; border: none; border-left: 1px solid var(--border); padding: 0 1.2rem; cursor: pointer; color: var(--ink); font-size: 1rem; transition: color 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
+    .nav-btn:hover { color: var(--blue-mid); background: var(--blue-light); }
 
     /* HERO */
     .post-hero {
@@ -72,297 +69,141 @@ layout: null
       border-bottom: 1px solid var(--border);
     }
 
-    .post-hero-image {
-      background: linear-gradient(160deg, #a8c4d4, #5a90aa);
-      position: relative;
-      overflow: hidden;
-      min-height: 400px;
-      border-right: 1px solid var(--border);
-    }
+    .post-hero-image { position: relative; overflow: hidden; min-height: 400px; border-right: 1px solid var(--border); background: linear-gradient(160deg, #a8c4d4, #5a90aa); }
+    .post-hero-image img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .post-hero-meta { padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .post-region { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); }
+    .post-title { font-family: 'EB Garamond', serif; font-style: italic; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.15; letter-spacing: -0.02em; }
 
-    .post-hero-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      position: absolute;
-      inset: 0;
-      opacity: 0.85;
-    }
-
-    .post-hero-meta {
-      padding: 4rem 3rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .post-region {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-    }
-
-    .post-title {
-      font-family: 'EB Garamond', serif;
-      font-style: italic;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-    }
-
-    .post-date-row {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      border-top: 1px solid var(--border);
-      padding-top: 1.5rem;
-    }
-
-    .post-date {
-      font-size: 0.72rem;
-      color: var(--muted);
-      font-weight: 300;
-    }
-
-    .post-tag {
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      padding: 0.3rem 0.8rem;
-      border: 1px solid var(--blue);
-      color: var(--blue-mid);
-      background: var(--blue-light);
-    }
+    .post-date-row { display: flex; align-items: center; gap: 1rem; border-top: 1px solid var(--border); padding-top: 1.5rem; flex-wrap: wrap; }
+    .post-date { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
+    .post-readtime { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
+    .post-tag { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.3rem 0.8rem; border: 1px solid var(--blue); color: var(--blue-mid); background: var(--blue-light); }
 
     /* CONTENT */
-    .post-content-wrap {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      border-bottom: 1px solid var(--border);
-    }
+    .post-content-wrap { display: grid; grid-template-columns: 280px 1fr; border-bottom: 1px solid var(--border); }
+    .post-sidebar { padding: 3rem; border-right: 1px solid var(--border); position: sticky; top: 80px; align-self: start; }
+    .sidebar-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 1.5rem; display: block; }
+    .sidebar-info { display: flex; flex-direction: column; gap: 1.2rem; }
+    .sidebar-item { border-top: 1px solid var(--border); padding-top: 1rem; }
+    .sidebar-item-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 0.3rem; }
+    .sidebar-item-value { font-size: 0.85rem; }
 
-    .post-sidebar {
-      padding: 3rem;
-      border-right: 1px solid var(--border);
-      position: sticky;
-      top: 80px;
-      align-self: start;
-    }
+    .post-body { padding: 3rem 4rem; max-width: 720px; }
+    .post-body p { font-size: 0.95rem; line-height: 2; color: #555; font-weight: 300; margin-bottom: 1.8rem; }
+    body.dark .post-body p { color: #aaa; }
+    .post-body h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.03em; text-transform: uppercase; margin: 3rem 0 1.2rem; padding-top: 3rem; border-top: 1px solid var(--border); }
+    .post-body h3 { font-family: 'EB Garamond', serif; font-style: italic; font-size: 1.5rem; margin: 2rem 0 1rem; }
+    .post-body blockquote { font-family: 'EB Garamond', serif; font-style: italic; font-size: 1.4rem; line-height: 1.6; padding: 2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 2.5rem 0; }
+    .post-body blockquote p { font-size: 1.4rem; font-family: 'EB Garamond', serif; font-style: italic; font-weight: 400; margin: 0; color: var(--ink); }
+    .post-body img { width: 100%; height: auto; display: block; margin: 2.5rem 0; border: 1px solid var(--border); loading: lazy; }
+    .post-body img + em { display: block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-top: -2rem; margin-bottom: 2.5rem; font-style: normal; }
+    .post-body iframe { width: 100%; aspect-ratio: 16/9; border: 1px solid var(--border); margin: 2.5rem 0; display: block; }
+    .post-body hr { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
 
-    .sidebar-label {
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      display: block;
-    }
+    /* ÄHNLICHE BEITRÄGE */
+    .related { border-top: 1px solid var(--border); }
+    .related-header { padding: 2rem 3rem; border-bottom: 1px solid var(--border); }
+    .related-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .related-item { text-decoration: none; color: var(--ink); border-right: 1px solid var(--border); transition: background 0.2s; }
+    .related-item:last-child { border-right: none; }
+    .related-item:hover { background: var(--blue-light); }
+    .related-img { aspect-ratio: 3/2; background-size: cover; background-position: center; border-bottom: 1px solid var(--border); }
+    .related-info { padding: 1.5rem; }
+    .related-region { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 0.5rem; }
+    .related-title { font-size: 0.9rem; font-weight: 500; letter-spacing: -0.02em; }
 
-    .sidebar-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
+    /* KOMMENTARE */
+    .comments-wrap { border-top: 1px solid var(--border); padding: 3rem; }
+    .comments-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 2rem; }
 
-    .sidebar-item {
+    /* NEWSLETTER */
+    .newsletter {
+      background: var(--blue-light);
       border-top: 1px solid var(--border);
-      padding-top: 1rem;
-    }
-
-    .sidebar-item-label {
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      margin-bottom: 0.3rem;
-    }
-
-    .sidebar-item-value {
-      font-size: 0.85rem;
-      font-weight: 400;
-    }
-
-    .post-body {
-      padding: 3rem 4rem;
-      max-width: 720px;
-    }
-
-    /* TYPOGRAPHY */
-    .post-body p {
-      font-size: 0.95rem;
-      line-height: 2;
-      color: #444;
-      font-weight: 300;
-      margin-bottom: 1.8rem;
-    }
-
-    .post-body h2 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      text-transform: uppercase;
-      margin: 3rem 0 1.2rem;
-      padding-top: 3rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .post-body h3 {
-      font-family: 'EB Garamond', serif;
-      font-style: italic;
-      font-size: 1.5rem;
-      margin: 2rem 0 1rem;
-      color: var(--ink);
-    }
-
-    .post-body blockquote {
-      font-family: 'EB Garamond', serif;
-      font-style: italic;
-      font-size: 1.4rem;
-      line-height: 1.6;
-      color: var(--ink);
-      padding: 2rem 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin: 2.5rem 0;
-    }
-
-    .post-body blockquote p {
-      font-size: 1.4rem;
-      font-family: 'EB Garamond', serif;
-      font-style: italic;
-      color: var(--ink);
-      font-weight: 400;
-      margin: 0;
-    }
-
-    /* BILDER */
-    .post-body img {
-      width: 100%;
-      height: auto;
-      display: block;
-      margin: 2.5rem 0;
-      border: 1px solid var(--border);
-    }
-
-    .post-body img + em {
-      display: block;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      margin-top: -2rem;
-      margin-bottom: 2.5rem;
-      font-style: normal;
-    }
-
-    /* VIDEOS */
-    .post-body iframe {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border: 1px solid var(--border);
-      margin: 2.5rem 0;
-      display: block;
-    }
-
-    /* TRENNLINIE */
-    .post-body hr {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 3rem 0;
-    }
-
-    /* NAVIGATION ZWISCHEN BEITRÄGEN */
-    .post-nav {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      border-top: 1px solid var(--border);
     }
 
-    .post-nav-item {
-      padding: 2.5rem 3rem;
-      text-decoration: none;
-      color: var(--ink);
-      transition: background 0.2s;
-      border-right: 1px solid var(--border);
-    }
+    .newsletter-left { padding: 3rem; border-right: 1px solid var(--border); }
+    .newsletter-right { padding: 3rem; display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+    .newsletter-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.8rem; }
+    .newsletter-title { font-family: 'EB Garamond', serif; font-style: italic; font-size: 2rem; line-height: 1.2; margin-bottom: 0.8rem; }
+    .newsletter-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+    .newsletter-input { width: 100%; font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; padding: 0.9rem 1.2rem; border: 1px solid var(--border); background: var(--bg); color: var(--ink); outline: none; }
+    .newsletter-input:focus { border-color: var(--blue-mid); }
+    .newsletter-btn { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.9rem 2rem; background: var(--ink); color: var(--bg); border: none; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
+    .newsletter-btn:hover { background: var(--blue-mid); }
+    .newsletter-note { font-size: 0.65rem; color: var(--muted); }
 
+    /* BEITRAGS-NAVIGATION */
+    .post-nav { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
+    .post-nav-item { padding: 2.5rem 3rem; text-decoration: none; color: var(--ink); transition: background 0.2s; border-right: 1px solid var(--border); }
     .post-nav-item:last-child { border-right: none; text-align: right; }
     .post-nav-item:hover { background: var(--blue-light); }
+    .post-nav-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); display: block; margin-bottom: 0.5rem; }
+    .post-nav-title { font-size: 0.9rem; font-weight: 500; letter-spacing: -0.02em; }
 
-    .post-nav-label {
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .post-nav-title {
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-    }
+    /* ZURÜCK NACH OBEN */
+    .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 44px; height: 44px; background: var(--ink); color: var(--bg); border: none; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 100; transform: translateY(10px); }
+    .back-to-top.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .back-to-top:hover { background: var(--blue-mid); }
 
     /* FOOTER */
-    footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2rem 3rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-logo {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-    }
-
-    .footer-copy {
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-    }
+    footer { display: flex; justify-content: space-between; align-items: center; padding: 2rem 3rem; border-top: 1px solid var(--border); }
+    .footer-logo { font-size: 1rem; font-weight: 700; letter-spacing: -0.04em; text-transform: uppercase; }
+    .footer-copy { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.08em; }
 
     @media (max-width: 900px) {
       nav { padding: 1.2rem 1.5rem; }
       .post-hero { grid-template-columns: 1fr; }
-      .post-hero-image { min-height: 260px; }
+      .post-hero-image { min-height: 260px; border-right: none; border-bottom: 1px solid var(--border); }
       .post-content-wrap { grid-template-columns: 1fr; }
       .post-sidebar { position: static; border-right: none; border-bottom: 1px solid var(--border); }
       .post-body { padding: 2rem 1.5rem; }
+      .related-grid { grid-template-columns: 1fr; }
+      .related-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .newsletter { grid-template-columns: 1fr; }
+      .newsletter-left { border-right: none; border-bottom: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
 
+{% assign words = content | number_of_words %}
+{% assign readtime = words | divided_by: 200 | plus: 1 %}
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
 <nav>
   <a href="{{ site.baseurl }}/" class="nav-logo">Bricks</a>
-  <a href="{{ site.baseurl }}/" class="nav-back">← Alle Reisen</a>
+  <div style="display:flex;align-items:center;gap:0;">
+    <a href="{{ site.baseurl }}/" class="nav-back" style="margin-right:1.5rem;">← Alle Reisen</a>
+    <button class="nav-btn" onclick="toggleDark()" id="darkBtn" title="Dunkelmodus">☾</button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <div class="post-hero">
   <div class="post-hero-image">
     {% if page.cover_image %}
-      <img src="{{ site.baseurl }}/assets/images/{{ page.cover_image }}" alt="{{ page.title }}">
+    <img src="{{ site.baseurl }}/assets/images/{{ page.cover_image }}"
+         alt="{{ page.title }}"
+         loading="lazy"
+         style="object-position: {{ page.cover_position | default: 'center 60%' }};">
     {% endif %}
   </div>
   <div class="post-hero-meta">
-    <span class="post-region">{{ page.region }}</span>
+    <span class="post-region">{{ page.region }}{% if page.country %} · {{ page.country }}{% endif %}</span>
     <h1 class="post-title">{{ page.title }}</h1>
     <div class="post-date-row">
       <span class="post-date">{{ page.date | date: "%d. %B %Y" }}</span>
+      <span class="post-readtime">· {{ readtime }} min Lesezeit</span>
       {% if page.region %}<span class="post-tag">{{ page.region }}</span>{% endif %}
-      {% if page.tags %}
-        {% for tag in page.tags %}
-          <span class="post-tag" style="border-color:var(--border);color:var(--muted);background:none;">{{ tag }}</span>
-        {% endfor %}
-      {% endif %}
+      {% for tag in page.tags %}
+      <span class="post-tag" style="border-color:var(--border);color:var(--muted);background:none;">{{ tag }}</span>
+      {% endfor %}
     </div>
   </div>
 </div>
@@ -379,11 +220,11 @@ layout: null
       </div>
       {% endif %}
       {% if page.country %}
-<div class="sidebar-item">
-  <div class="sidebar-item-label">Land</div>
-  <div class="sidebar-item-value">{{ page.country }}</div>
-</div>
-{% endif %}
+      <div class="sidebar-item">
+        <div class="sidebar-item-label">Land</div>
+        <div class="sidebar-item-value">{{ page.country }}</div>
+      </div>
+      {% endif %}
       {% if page.cities %}
       <div class="sidebar-item">
         <div class="sidebar-item-label">Orte</div>
@@ -402,6 +243,10 @@ layout: null
         <div class="sidebar-item-value">{{ page.season }}</div>
       </div>
       {% endif %}
+      <div class="sidebar-item">
+        <div class="sidebar-item-label">Lesezeit</div>
+        <div class="sidebar-item-value">{{ readtime }} min</div>
+      </div>
     </div>
   </aside>
 
@@ -410,7 +255,65 @@ layout: null
   </article>
 </div>
 
-<!-- NAVIGATION ZWISCHEN BEITRÄGEN -->
+<!-- ÄHNLICHE BEITRÄGE -->
+{% assign related = site.posts | where: 'region', page.region | where_exp: 'p', 'p.url != page.url' | limit: 3 %}
+{% if related.size > 0 %}
+<div class="related">
+  <div class="related-header">
+    <span class="related-label">Weitere Reisen aus {{ page.region }}</span>
+  </div>
+  <div class="related-grid">
+    {% for post in related %}
+    <a class="related-item" href="{{ site.baseurl }}{{ post.url }}">
+      <div class="related-img" style="{% if post.cover_image %}background-image:url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}');{% else %}background: linear-gradient(140deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
+      <div class="related-info">
+        <div class="related-region">{{ post.region }} · {{ post.date | date: "%B %Y" }}</div>
+        <div class="related-title">{{ post.title }}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <div class="newsletter-left">
+    <p class="newsletter-label">Newsletter</p>
+    <h2 class="newsletter-title">Neue Reisen direkt ins Postfach.</h2>
+    <p class="newsletter-desc">Keine Werbung, kein Spam — nur neue Beiträge wenn ich unterwegs war.</p>
+  </div>
+  <div class="newsletter-right">
+    <iframe src="https://buttondown.com/liselipiseli/embed"
+      style="width:100%;border:none;height:auto;"
+      scrolling="no"
+      frameborder="0">
+    </iframe>
+    <p class="newsletter-note">Jederzeit abmeldbar. Kein Spam.</p>
+  </div>
+</div>
+
+<!-- KOMMENTARE (Giscus) -->
+<div class="comments-wrap">
+  <p class="comments-label">Kommentare</p>
+  <script src="https://giscus.app/client.js"
+    data-repo="liselipiseli/travelblog"
+    data-repo-id="DEINE_REPO_ID"
+    data-category="General"
+    data-category-id="DEINE_CATEGORY_ID"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="de"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
+
+<!-- BEITRAGS-NAVIGATION -->
 <div class="post-nav">
   <div>
     {% if page.previous.url %}
@@ -432,8 +335,35 @@ layout: null
 
 <footer>
   <span class="footer-logo">Bricks</span>
-  <span class="footer-copy">© 2024 Travel Blog von Lisa</span>
+  <span class="footer-copy">© {{ 'now' | date: "%Y" }} Travel Blog von Lisa</span>
 </footer>
 
+<script>
+// DUNKELMODUS
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  const btn = document.getElementById('darkBtn');
+  btn.innerHTML = document.body.classList.contains('dark') ? '&#9788;' : '&#9790;';
+  localStorage.setItem('darkmode', document.body.classList.contains('dark') ? '1' : '0');
+  // Giscus Theme anpassen
+  const iframe = document.querySelector('iframe.giscus-frame');
+  if (iframe) {
+    iframe.contentWindow.postMessage({
+      giscus: { setConfig: { theme: document.body.classList.contains('dark') ? 'dark' : 'light' } }
+    }, 'https://giscus.app');
+  }
+}
+
+if (localStorage.getItem('darkmode') === '1') {
+  document.body.classList.add('dark');
+  document.getElementById('darkBtn').innerHTML = '&#9788;';
+}
+
+// ZURÜCK NACH OBEN
+const btt = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('visible', window.scrollY > 400);
+});
+</script>
 </body>
 </html>
