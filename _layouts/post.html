@@ -133,21 +133,7 @@ layout: null
     .newsletter-btn { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.9rem 2rem; background: var(--ink); color: var(--bg); border: none; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
     .newsletter-btn:hover { background: var(--blue-mid); }
     .newsletter-note { font-size: 0.65rem; color: var(--muted); }
-    <form
-  action="https://buttondown.com/api/emails/embed-subscribe/liselipiseli"
-  method="post"
-  class="embeddable-buttondown-form"
->
-  <label for="bd-email">Enter your email</label>
-  <input type="email" name="email" id="bd-email" />
-  <input type="text" name="metadata__first_name" id="first_name" />
-  <input type="text" name="metadata__gender" id="gender" />
-  <input type="submit" value="Subscribe" />
-  <p>
-    <a href="https://buttondown.com/refer/liselipiseli" target="_blank">
-    </a>
-  </p>
-</form>
+    
 
     /* BEITRAGS-NAVIGATION */
     .post-nav { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
@@ -296,7 +282,22 @@ layout: null
     <p class="newsletter-desc">Keine Werbung, kein Spam — nur neue Beiträge wenn ich unterwegs war.</p>
   </div>
   <div class="newsletter-right">
-    <iframe src="https://buttondown.com/liselipiseli/embed"
+    <form
+  action="https://buttondown.com/api/emails/embed-subscribe/liselipiseli"
+  method="post"
+  class="embeddable-buttondown-form"
+>
+  <label for="bd-email">Enter your email</label>
+  <input type="email" name="email" id="bd-email" />
+  <input type="text" name="metadata__first_name" id="first_name" />
+  <input type="text" name="metadata__gender" id="gender" />
+  <input type="submit" value="Subscribe" />
+  <p>
+    <a href="https://buttondown.com/refer/liselipiseli" target="_blank">
+      Powered by Buttondown.
+    </a>
+  </p>
+</form>
       style="width:100%;border:none;height:auto;"
       scrolling="no"
       frameborder="0">
@@ -304,6 +305,7 @@ layout: null
     <p class="newsletter-note">Jederzeit abmeldbar. Kein Spam.</p>
   </div>
 </div>
+  
 
 <!-- BEITRAGS-NAVIGATION -->
 <div class="post-nav">
