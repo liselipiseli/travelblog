@@ -309,7 +309,28 @@ layout: null
   .read-more { display: inline-block; margin-top: 1.5rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--blue-mid); text-decoration: none; border-bottom: 1px solid var(--blue); padding-bottom: 0.2rem; transition: color 0.2s; }
   .read-more:hover { color: var(--ink); border-color: var(--ink); }
 
-  /* FOOTER */
+  /* NEWSLETTER */
+  .newsletter-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .newsletter-left { padding: 3rem; border-right: 1px solid var(--border); }
+  .newsletter-right { padding: 3rem; display: flex; flex-direction: column; justify-content: center; gap: 0.8rem; }
+  .newsletter-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.8rem; display: block; }
+  .newsletter-title { font-family: 'EB Garamond', serif; font-style: italic; font-size: 2rem; line-height: 1.2; margin-bottom: 0.8rem; }
+  .newsletter-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+  .embeddable-buttondown-form { display: flex; flex-direction: column; gap: 0.8rem; }
+  .embeddable-buttondown-form label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); }
+  .embeddable-buttondown-form input[type="email"],
+  .embeddable-buttondown-form input[type="text"] { width: 100%; font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; padding: 0.9rem 1.2rem; border: 1px solid var(--border); background: var(--bg); color: var(--ink); outline: none; transition: border-color 0.2s; }
+  .embeddable-buttondown-form input[type="email"]:focus,
+  .embeddable-buttondown-form input[type="text"]:focus { border-color: var(--blue-mid); }
+  .embeddable-buttondown-form input[type="submit"] { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.9rem 2rem; background: var(--ink); color: var(--bg); border: none; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
+  .embeddable-buttondown-form input[type="submit"]:hover { background: var(--blue-mid); }
+  .embeddable-buttondown-form p { font-size: 0.65rem; color: var(--muted); }
+  .embeddable-buttondown-form p a { color: var(--muted); text-decoration: none; }
+  .newsletter-note { font-size: 0.65rem; color: var(--muted); }
   footer { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; border-top: 1px solid var(--border); }
   .footer-col { padding: 3rem; border-right: 1px solid var(--border); }
   .footer-col:last-child { border-right: none; }
@@ -586,6 +607,37 @@ layout: null
 
 <!-- ZURÜCK NACH OBEN -->
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-section">
+  <div class="newsletter-left" style="background: var(--blue-light);">
+    <span class="newsletter-label">Newsletter</span>
+    <h2 class="newsletter-title">Neue Reisen direkt ins Postfach.</h2>
+    <p class="newsletter-desc">Keine Werbung, kein Spam — nur neue Beiträge wenn ich unterwegs war.</p>
+  </div>
+  <div class="newsletter-right">
+    <form
+      action="https://buttondown.com/api/emails/embed-subscribe/liselipiseli"
+      method="post"
+      class="embeddable-buttondown-form"
+    >
+      <label for="bd-email-home">E-Mail Adresse</label>
+      <input type="email" name="email" id="bd-email-home" placeholder="deine@email.de" required />
+      <label for="first_name_home">Vorname (optional)</label>
+      <input type="text" name="metadata__first_name" id="first_name_home" placeholder="Lisa" />
+      <label for="gender_home">Ansprache (optional)</label>
+      <select name="metadata__gender" id="gender_home" style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;padding:0.9rem 1.2rem;border:1px solid var(--border);background:var(--bg);color:var(--ink);outline:none;width:100%;appearance:none;cursor:pointer;">
+        <option value="">Bitte wählen</option>
+        <option value="weiblich">Sie / ihr (weiblich)</option>
+        <option value="maennlich">Er / ihm (männlich)</option>
+        <option value="divers">Divers / keine Angabe</option>
+      </select>
+      <input type="submit" value="Anmelden" />
+      <p><a href="https://buttondown.com/refer/liselipiseli" target="_blank">Powered by Buttondown.</a></p>
+    </form>
+    <p class="newsletter-note">Jederzeit abmeldbar. Kein Spam.</p>
+  </div>
+</div>
 
 <!-- IMPRESSUM MODAL -->
 <div class="modal-overlay" id="impressumModal" onclick="closeModal(event)">
