@@ -114,6 +114,9 @@ layout: null
     .related-region { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 0.5rem; }
     .related-title { font-size: 0.9rem; font-weight: 500; letter-spacing: -0.02em; }
 
+    /* KOMMENTARE */
+    .comments-wrap { border-top: 1px solid var(--border); padding: 3rem; }
+    .comments-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 2rem; }
 
     /* NEWSLETTER */
     .newsletter {
@@ -128,12 +131,17 @@ layout: null
     .newsletter-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.8rem; }
     .newsletter-title { font-family: 'EB Garamond', serif; font-style: italic; font-size: 2rem; line-height: 1.2; margin-bottom: 0.8rem; }
     .newsletter-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
-    .newsletter-input { width: 100%; font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; padding: 0.9rem 1.2rem; border: 1px solid var(--border); background: var(--bg); color: var(--ink); outline: none; }
-    .newsletter-input:focus { border-color: var(--blue-mid); }
-    .newsletter-btn { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.9rem 2rem; background: var(--ink); color: var(--bg); border: none; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
-    .newsletter-btn:hover { background: var(--blue-mid); }
+    .embeddable-buttondown-form { display: flex; flex-direction: column; gap: 0.8rem; }
+    .embeddable-buttondown-form label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); }
+    .embeddable-buttondown-form input[type="email"],
+    .embeddable-buttondown-form input[type="text"] { width: 100%; font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; padding: 0.9rem 1.2rem; border: 1px solid var(--border); background: var(--bg); color: var(--ink); outline: none; transition: border-color 0.2s; }
+    .embeddable-buttondown-form input[type="email"]:focus,
+    .embeddable-buttondown-form input[type="text"]:focus { border-color: var(--blue-mid); }
+    .embeddable-buttondown-form input[type="submit"] { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.9rem 2rem; background: var(--ink); color: var(--bg); border: none; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
+    .embeddable-buttondown-form input[type="submit"]:hover { background: var(--blue-mid); }
+    .embeddable-buttondown-form p { font-size: 0.65rem; color: var(--muted); }
+    .embeddable-buttondown-form p a { color: var(--muted); text-decoration: none; }
     .newsletter-note { font-size: 0.65rem; color: var(--muted); }
-    
 
     /* BEITRAGS-NAVIGATION */
     .post-nav { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
@@ -283,29 +291,47 @@ layout: null
   </div>
   <div class="newsletter-right">
     <form
-  action="https://buttondown.com/api/emails/embed-subscribe/liselipiseli"
-  method="post"
-  class="embeddable-buttondown-form"
->
-  <label for="bd-email">Enter your email</label>
-  <input type="email" name="email" id="bd-email" />
-  <input type="text" name="metadata__first_name" id="first_name" />
-  <input type="text" name="metadata__gender" id="gender" />
-  <input type="submit" value="Subscribe" />
-  <p>
-    <a href="https://buttondown.com/refer/liselipiseli" target="_blank">
-      Powered by Buttondown.
-    </a>
-  </p>
-</form>
-      style="width:100%;border:none;height:auto;"
-      scrolling="no"
-      frameborder="0">
-    </iframe>
+      action="https://buttondown.com/api/emails/embed-subscribe/liselipiseli"
+      method="post"
+      class="embeddable-buttondown-form"
+    >
+      <label for="bd-email">E-Mail Adresse</label>
+      <input type="email" name="email" id="bd-email" placeholder="deine@email.de" required />
+      <label for="first_name">Vorname (optional)</label>
+      <input type="text" name="metadata__first_name" id="first_name" placeholder="Lisa" />
+      <label for="gender">Ansprache (optional)</label>
+      <select name="metadata__gender" id="gender" style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;padding:0.9rem 1.2rem;border:1px solid var(--border);background:var(--bg);color:var(--ink);outline:none;width:100%;appearance:none;cursor:pointer;">
+        <option value="">Bitte wählen</option>
+        <option value="weiblich">Sie / ihr (weiblich)</option>
+        <option value="maennlich">Er / ihm (männlich)</option>
+        <option value="divers">Divers / keine Angabe</option>
+      </select>
+      <input type="submit" value="Anmelden" />
+      <p><a href="https://buttondown.com/refer/liselipiseli" target="_blank">Powered by Buttondown.</a></p>
+    </form>
     <p class="newsletter-note">Jederzeit abmeldbar. Kein Spam.</p>
   </div>
 </div>
-  
+
+<!-- KOMMENTARE (Giscus) -->
+<div class="comments-wrap">
+  <p class="comments-label">Kommentare</p>
+  <script src="https://giscus.app/client.js"
+    data-repo="liselipiseli/travelblog"
+    data-repo-id="DEINE_REPO_ID"
+    data-category="General"
+    data-category-id="DEINE_CATEGORY_ID"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="de"
+    crossorigin="anonymous"
+    async>
+  </script>
+</div>
 
 <!-- BEITRAGS-NAVIGATION -->
 <div class="post-nav">
