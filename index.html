@@ -579,7 +579,7 @@ layout: null
     <p class="section-desc">Persönliche Einträge aus dem Reisetagebuch.</p>
   </div>
   <div class="section-body" style="padding:0;">
-    {% for post in site.posts %}
+    {% for post in site.posts %}{% if post.layout == 'day' %}{% continue %}{% endif %}
     <div class="post-wrapper">
       <div class="post-image-side">
         <div class="post-img-bg" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: center;{% else %}background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
