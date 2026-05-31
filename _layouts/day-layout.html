@@ -156,16 +156,20 @@ layout: null
 {% assign words = content | number_of_words %}
 {% assign readtime = words | divided_by: 200 | plus: 1 %}
 
+{% assign prev_day = nil %}
+{% assign next_day = nil %}
 {% for d in all_days %}
-  {% if d.day_number == page.day_number %}
-    {% assign current_index = forloop.index0 %}
+  {% if d.url == page.url %}
+    {% if forloop.index0 > 0 %}
+      {% assign prev_index = forloop.index0 | minus: 1 %}
+      {% assign prev_day = all_days[prev_index] %}
+    {% endif %}
+    {% unless forloop.last %}
+      {% assign next_index = forloop.index0 | plus: 1 %}
+      {% assign next_day = all_days[next_index] %}
+    {% endunless %}
   {% endif %}
 {% endfor %}
-
-{% assign prev_index = current_index | minus: 1 %}
-{% assign next_index = current_index | plus: 1 %}
-{% assign prev_day = all_days[prev_index] %}
-{% assign next_day = all_days[next_index] %}
 
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
