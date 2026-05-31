@@ -566,17 +566,17 @@ const icon = L.divIcon({
 });
 
 const mapPosts = [
-  {% assign map_posts = site.posts | where_exp: "p", "p.lat and p.lng" %}
-  {% for post in map_posts %}
+  {% for post in site.posts %}{% unless post.lat == nil or post.lng == nil %}
   {% assign pin_name = post.title %}
-  {% if post.type == "day" %}{% assign pin_name = post.trip_title %}{% endif %}{
+  {% if post.type == "day" %}{% assign pin_name = post.trip_title %}{% endif %}
+  {
     lat: {{ post.lat }},
     lng: {{ post.lng }},
     name: {{ pin_name | jsonify }},
     date: "{{ post.date | date: '%B %Y' }}",
     url: "{{ site.baseurl }}{{ post.url }}"
-  }{% unless forloop.last %},{% endunless %}
-  {% endfor %}
+  },
+  {% endunless %}{% endfor %}
 ];
 
 mapPosts.forEach(p => {
