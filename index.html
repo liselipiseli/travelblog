@@ -523,7 +523,7 @@ layout: null
     <div class="region-bar">
       <span class="region-bar-label">Filter</span>
       <button class="region-btn active" onclick="filterRegion('alle', this)">Alle</button>
-      {% assign regions = site.posts | map: 'region' | uniq | sort %}
+      {% assign regions = site.posts | where_exp: 'p', 'p.type != "day"' | map: 'region' | uniq | sort %}
       {% for region in regions %}
       <button class="region-btn" onclick="filterRegion('{{ region }}', this)">{{ region }}</button>
       {% endfor %}
@@ -678,7 +678,7 @@ layout: null
   <div class="footer-col">
     <h4>Regionen</h4>
     <ul>
-      {% assign regions = site.posts | map: 'region' | uniq | sort %}
+      {% assign regions = site.posts | where_exp: 'p', 'p.type != "day"' | map: 'region' | uniq | sort %}
       {% for region in regions %}
       <li><a href="{{ site.baseurl }}/region/{{ region | downcase | replace: ' ', '-' }}/">{{ region }}</a></li>
       {% endfor %}
@@ -726,7 +726,8 @@ if (localStorage.getItem('darkmode') === '1') {
 
 // SUCHE
 const allPosts = [
-  {% for post in site.posts %}
+  {% assign searchable_posts = site.posts | where_exp: 'p', 'p.type != "day"' %}
+  {% for post in searchable_posts %}
   {
     title: {{ post.title | jsonify }},
     region: {{ post.region | jsonify }},
