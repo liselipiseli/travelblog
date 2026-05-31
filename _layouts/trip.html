@@ -178,7 +178,7 @@ layout: null
 </head>
 <body>
 
-{% assign trip_days = site.posts | where: 'trip_id', page.trip_id | where: 'layout', 'day' | sort: 'day_number' %}
+{% assign trip_days = site.posts | where: 'trip_id', page.trip_id | where: 'type', 'day' | sort: 'day_number' %}
 
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
