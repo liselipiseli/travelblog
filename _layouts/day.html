@@ -59,8 +59,9 @@ layout: null
     .breadcrumb span { color: var(--border); }
 
     /* HERO */
-    .day-hero {
-      display: grid;
+    .page-wrap {
+      padding-top: 73px;
+    }
       grid-template-columns: 1fr 1fr;
       min-height: 50vh;
       border-bottom: 1px solid var(--border);
@@ -186,7 +187,7 @@ layout: null
 </nav>
 
 <!-- BREADCRUMB -->
-<div class="breadcrumb">
+<div class="breadcrumb" id="breadcrumb">
   <a href="{{ site.baseurl }}/">Startseite</a>
   <span>/</span>
   {% if trip_page %}
