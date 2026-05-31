@@ -530,7 +530,7 @@ layout: null
     </div>
 
     <div class="trips-list" style="padding: 0 3rem;">
-      {% for post in site.posts %}
+      {% for post in site.posts %}{% if post.layout == 'day' %}{% continue %}{% endif %}
       <a class="trip-row" href="{{ site.baseurl }}{{ post.url }}" data-region="{{ post.region }}">
         <span class="trip-index">{{ forloop.index | prepend: '00' | slice: -3, 3 }}</span>
         <div class="trip-info">
@@ -561,7 +561,7 @@ layout: null
   </div>
   <div class="section-body">
     <div class="gallery-grid">
-      {% for post in site.posts limit:7 %}
+      {% for post in site.posts limit:7 %}{% if post.layout == 'day' %}{% continue %}{% endif %}
       <a class="gal-item" href="{{ site.baseurl }}{{ post.url }}" style="text-decoration:none;">
         <div class="gal-inner" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: {{ post.cover_position | default: 'center 60%' }};{% else %}background: linear-gradient(140deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
         <div class="gal-label">{{ post.title }}</div>
@@ -579,7 +579,7 @@ layout: null
     <p class="section-desc">Persönliche Einträge aus dem Reisetagebuch.</p>
   </div>
   <div class="section-body" style="padding:0;">
-    {% for post in site.posts %}
+    {% for post in site.posts %}{% if post.layout == 'day' %}{% continue %}{% endif %}
     <div class="post-wrapper">
       <div class="post-image-side">
         <div class="post-img-bg" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: center;{% else %}background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
