@@ -151,8 +151,8 @@ layout: null
 </head>
 <body>
 
-{% assign all_days = site.posts | where: 'trip_id', page.trip_id | where: 'layout', 'day' | sort: 'day_number' %}
-{% assign trip_page = site.posts | where: 'trip_id', page.trip_id | where: 'layout', 'trip' | first %}
+{% assign all_days = site.posts | where: 'trip_id', page.trip_id | where: 'type', 'day' | sort: 'day_number' %}
+{% assign trip_page = site.posts | where: 'trip_id', page.trip_id | where: 'type', 'trip' | first %}
 {% assign words = content | number_of_words %}
 {% assign readtime = words | divided_by: 200 | plus: 1 %}
 
