@@ -3,7 +3,7 @@ layout: null
 ---
 <!DOCTYPE html>
 <html lang="de">
-<head>{% include head.html %}
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.region }} — Bricks</title>
@@ -257,7 +257,7 @@ layout: null
 </head>
 <body>
 
-{% assign region_posts = site.posts | where: 'region', page.region %}
+{% assign region_posts = site.posts | where: 'region', page.region | where_exp: 'p', 'p.type != "day"' %}
 
 <nav>
   <a href="{{ site.baseurl }}/" class="nav-logo">Bricks</a>
@@ -353,7 +353,7 @@ layout: null
 </div>
 
 <!-- ANDERE REGIONEN -->
-{% assign all_regions = site.posts | map: 'region' | uniq | sort %}
+{% assign all_regions = site.posts | where_exp: 'p', 'p.type != "day"' | map: 'region' | uniq | sort %}
 {% assign other_regions = all_regions | where_exp: 'r', 'r != page.region' %}
 {% if other_regions.size > 0 %}
 <div class="other-regions">
