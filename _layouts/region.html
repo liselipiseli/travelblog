@@ -257,7 +257,8 @@ layout: null
 </head>
 <body>
 
-{% assign region_posts = site.posts | where: 'region', page.region | where_exp: 'p', 'p.type != "day"' %}
+{% assign main_posts = site.posts | where_exp: 'p', 'p.type != "day"' %}
+{% assign region_posts = main_posts | where: 'region', page.region %}
 
 <nav>
   <a href="{{ site.baseurl }}/" class="nav-logo">Bricks</a>
