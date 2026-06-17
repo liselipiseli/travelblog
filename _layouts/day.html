@@ -186,19 +186,6 @@ layout: null
   </div>
 </nav>
 
-<!-- BREADCRUMB -->
-<div class="breadcrumb" id="breadcrumb">
-  <a href="{{ site.baseurl }}/">Startseite</a>
-  <span>/</span>
-  {% if trip_page %}
-  <a href="{{ site.baseurl }}{{ trip_page.url }}">{{ page.trip_title }}</a>
-  {% else %}
-  <span>{{ page.trip_title }}</span>
-  {% endif %}
-  <span>/</span>
-  <span>Tag {{ page.day_number }}</span>
-</div>
-
 <!-- HERO -->
 <div class="day-hero">
   <div class="day-hero-left">
@@ -220,6 +207,19 @@ layout: null
       {% endfor %}
     </div>
   </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="{{ site.baseurl }}/">Startseite</a>
+  <span>/</span>
+  {% if trip_page %}
+  <a href="{{ site.baseurl }}{{ trip_page.url }}">{{ page.trip_title }}</a>
+  {% else %}
+  <span>{{ page.trip_title }}</span>
+  {% endif %}
+  <span>/</span>
+  <span>Tag {{ page.day_number }}</span>
 </div>
 
 <!-- INHALT -->
@@ -281,6 +281,10 @@ layout: null
       <span class="day-footer-nav-label">← Tag {{ prev_day.day_number }}</span>
       <span class="day-footer-nav-title">{{ prev_day.title }}</span>
     </a>
+    {% else %}
+    <div class="day-footer-nav-item" style="opacity:0;pointer-events:none;">
+      <span class="day-footer-nav-label">—</span>
+    </div>
     {% endif %}
   </div>
   <div>
@@ -297,6 +301,10 @@ layout: null
       <span class="day-footer-nav-label">Tag {{ next_day.day_number }} →</span>
       <span class="day-footer-nav-title">{{ next_day.title }}</span>
     </a>
+    {% else %}
+    <div class="day-footer-nav-item" style="opacity:0;pointer-events:none;text-align:right;">
+      <span class="day-footer-nav-label">—</span>
+    </div>
     {% endif %}
   </div>
 </div>
