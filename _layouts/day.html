@@ -281,6 +281,10 @@ layout: null
       <span class="day-footer-nav-label">← Tag {{ prev_day.day_number }}</span>
       <span class="day-footer-nav-title">{{ prev_day.title }}</span>
     </a>
+    {% else %}
+    <div class="day-footer-nav-item" style="opacity:0;pointer-events:none;">
+      <span class="day-footer-nav-label">—</span>
+    </div>
     {% endif %}
   </div>
   <div>
@@ -297,6 +301,10 @@ layout: null
       <span class="day-footer-nav-label">Tag {{ next_day.day_number }} →</span>
       <span class="day-footer-nav-title">{{ next_day.title }}</span>
     </a>
+    {% else %}
+    <div class="day-footer-nav-item" style="opacity:0;pointer-events:none;text-align:right;">
+      <span class="day-footer-nav-label">—</span>
+    </div>
     {% endif %}
   </div>
 </div>
