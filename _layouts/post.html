@@ -96,7 +96,7 @@ layout: null
     .post-body h3 { font-family: 'EB Garamond', serif; font-style: italic; font-size: 1.5rem; margin: 2rem 0 1rem; }
     .post-body blockquote { font-family: 'EB Garamond', serif; font-style: italic; font-size: 1.4rem; line-height: 1.6; padding: 2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 2.5rem 0; }
     .post-body blockquote p { font-size: 1.4rem; font-family: 'EB Garamond', serif; font-style: italic; font-weight: 400; margin: 0; color: var(--ink); }
-    .post-body img { width: 100%; height: auto; display: block; margin: 2.5rem 0; border: 1px solid var(--border); loading: lazy; }
+    .post-body img { max-width: 600px; width: 100%; height: auto; display: block; margin: 2.5rem auto; border: 1px solid var(--border); }
     .post-body img + em { display: block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-top: -2rem; margin-bottom: 2.5rem; font-style: normal; }
     .post-body iframe { width: 100%; aspect-ratio: 16/9; border: 1px solid var(--border); margin: 2.5rem 0; display: block; }
     .post-body hr { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
@@ -261,6 +261,12 @@ layout: null
   </article>
 </div>
 
+<!-- LIGHTBOX -->
+<button class="lightbox-close" onclick="closeLightbox()">✕</button>
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="">
+</div>
+
 <!-- ÄHNLICHE BEITRÄGE -->
 {% assign related = site.posts | where: 'region', page.region | where_exp: 'p', 'p.url != page.url' | limit: 3 %}
 {% if related.size > 0 %}
@@ -298,7 +304,7 @@ layout: null
       <label for="bd-email">E-Mail Adresse</label>
       <input type="email" name="email" id="bd-email" placeholder="deine@email.de" required />
       <label for="first_name">Vorname (optional)</label>
-      <input type="text" name="metadata__first_name" id="first_name" placeholder="Dein Name hier" />
+      <input type="text" name="metadata__first_name" id="first_name" placeholder="Lisa" />
       <label for="gender">Ansprache (optional)</label>
       <select name="metadata__gender" id="gender" style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;padding:0.9rem 1.2rem;border:1px solid var(--border);background:var(--bg);color:var(--ink);outline:none;width:100%;appearance:none;cursor:pointer;">
         <option value="">Bitte wählen</option>
@@ -383,6 +389,20 @@ if (localStorage.getItem('darkmode') === '1') {
 const btt = document.getElementById('backToTop');
 window.addEventListener('scroll', () => {
   btt.classList.toggle('visible', window.scrollY > 400);
+});
+
+// LIGHTBOX
+document.querySelectorAll('.post-body img').forEach(img => {
+  img.addEventListener('click', () => {
+    document.getElementById('lightboxImg').src = img.src;
+    document.getElementById('lightboxOverlay').classList.add('open');
+  });
+});
+function closeLightbox() {
+  document.getElementById('lightboxOverlay').classList.remove('open');
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
 });
 </script>
 </body>
