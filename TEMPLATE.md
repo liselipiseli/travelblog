@@ -4,6 +4,40 @@ Diese Datei einfach abspeichern (Notizen-App, Mac, etc.) und bei jedem neuen Bei
 
 ---
 
+## BILDER-ORGANISATION
+
+Jede Reise bekommt einen eigenen Unterordner in `assets/images/`:
+
+```
+assets/images/
+├── athen/
+│   ├── piraeus-hafen.jpg
+│   ├── fruehstueck.jpg
+│   └── akropolis-sonnenuntergang.jpg
+├── rom/
+│   ├── kolosseum.jpg
+│   └── trevi-brunnen.jpg
+└── og-default.jpg
+```
+
+**Dateinamen-Regeln:**
+- kurz und beschreibend (`piraeus-hafen.jpg`, nicht `IMG_4521.jpg`)
+- klein geschrieben
+- Bindestriche statt Leerzeichen
+- keine Umlaute (ä→ae, ö→oe, ü→ue, ß→ss)
+
+**Ordner anlegen:** Auf GitHub „Add file" → „Create new file" → Pfad eintippen z.B. `assets/images/rom/kolosseum.jpg` direkt beim Hochladen, oder vorher einen Platzhalter `assets/images/rom/.gitkeep` anlegen und dann Bilder reinziehen.
+
+In der Front Matter und im Text immer den vollen Pfad inkl. Ordner angeben:
+```markdown
+cover_image: rom/kolosseum.jpg
+```
+```markdown
+![Kolosseum]({{ site.baseurl }}/assets/images/rom/kolosseum.jpg)
+```
+
+---
+
 ## 1. EINFACHE REISE (ohne Tage-Aufteilung)
 
 **Dateiname:** `_posts/JJJJ-MM-TT-name.md`
@@ -23,7 +57,7 @@ duration: "X Tage"
 season: "Frühling"
 cover_color: "#a8c4d4"
 cover_color_dark: "#5a90aa"
-cover_image: HIER_BILDNAME.jpg
+cover_image: HIER_ORDNER/HIER_BILDNAME.jpg
 cover_position: "center 60%"
 photo_count: 0
 ---
@@ -54,7 +88,7 @@ duration: "X Tage"
 season: "Frühling"
 cover_color: "#a8c4d4"
 cover_color_dark: "#5a90aa"
-cover_image: HIER_BILDNAME.jpg
+cover_image: HIER_ORDNER/HIER_BILDNAME.jpg
 cover_position: "center 60%"
 photo_count: 0
 ---
@@ -90,7 +124,7 @@ Haupttext des Tages hier...
 
 ## Zwischenüberschrift (optional)
 
-![Bildbeschreibung]({{ site.baseurl }}/assets/images/HIER_BILDNAME.jpg)
+![Bildbeschreibung]({{ site.baseurl }}/assets/images/HIER_ORDNER/HIER_BILDNAME.jpg)
 *Bildunterschrift kursiv*
 
 Weiterer Text...
@@ -105,8 +139,9 @@ Weiterer Text...
 
 ## CHECKLISTE VOR DEM VERÖFFENTLICHEN
 
-- [ ] Bilder vorher in `assets/images/` hochgeladen?
-- [ ] Dateinamen der Bilder ohne Leerzeichen/Sonderzeichen?
+- [ ] Bilder vorher im passenden Unterordner `assets/images/REISENAME/` hochgeladen?
+- [ ] Dateinamen der Bilder ohne Leerzeichen/Umlaute/Sonderzeichen?
+- [ ] Bildpfade in Front Matter und Text enthalten den Ordnernamen?
 - [ ] `trip_id` bei allen Tagen identisch geschrieben?
 - [ ] `region` ist einer von: Europa, Asien, Afrika, Amerika, Ozeanien?
 - [ ] Datum im Format `JJJJ-MM-TT`?
