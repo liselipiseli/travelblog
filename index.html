@@ -10,6 +10,7 @@ layout: null
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% include head.html %}
 <style>
   :root {
     --bg: #f7f5f0;
@@ -24,212 +25,47 @@ layout: null
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+  body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--ink); font-size: 14px; overflow-x: hidden; }
 
-  body {
-    font-family: 'Space Grotesk', sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    font-size: 14px;
-    overflow-x: hidden;
-  }
-
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 200;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.8rem 3rem;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--ink);
-  }
-
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 3rem; background: var(--bg); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.04em; text-transform: uppercase; text-decoration: none; color: var(--ink); }
   .nav-links { list-style: none; display: flex; gap: 0; }
-  .nav-links a {
-    text-decoration: none;
-    color: var(--ink);
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    padding: 0 1.2rem;
-    border-left: 1px solid var(--border);
-    transition: color 0.2s;
-  }
+  .nav-links a { text-decoration: none; color: var(--ink); font-size: 0.75rem; font-weight: 400; letter-spacing: 0.02em; padding: 0 1.2rem; border-left: 1px solid var(--border); transition: color 0.2s; }
   .nav-links li:last-child a { border-right: 1px solid var(--border); }
   .nav-links a:hover { color: var(--blue-mid); }
-
-  /* NAV RECHTS: Suche + Dark Mode + Burger */
   .nav-actions { display: flex; align-items: center; gap: 0; }
-
-  .nav-btn {
-    background: none;
-    border: none;
-    border-left: 1px solid var(--border);
-    padding: 0 1.2rem;
-    cursor: pointer;
-    color: var(--ink);
-    font-size: 1rem;
-    height: 100%;
-    transition: color 0.2s, background 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 44px;
-    min-height: 44px;
-  }
-
+  .nav-btn { background: none; border: none; border-left: 1px solid var(--border); padding: 0 1.2rem; cursor: pointer; color: var(--ink); font-size: 1rem; height: 100%; transition: color 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
   .nav-btn:last-child { border-right: 1px solid var(--border); }
   .nav-btn:hover { color: var(--blue-mid); background: var(--blue-light); }
-
-  /* BURGER */
   .burger { display: none; flex-direction: column; gap: 5px; width: 20px; }
   .burger span { display: block; height: 1.5px; background: var(--ink); transition: all 0.3s; }
   .burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .burger.open span:nth-child(2) { opacity: 0; }
   .burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-  /* MOBILE MENU */
-  .mobile-menu {
-    display: none;
-    position: fixed;
-    top: 73px; left: 0; right: 0;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    z-index: 199;
-    flex-direction: column;
-  }
-
+  .mobile-menu { display: none; position: fixed; top: 73px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); z-index: 199; flex-direction: column; }
   .mobile-menu.open { display: flex; }
-
-  .mobile-menu a {
-    text-decoration: none;
-    color: var(--ink);
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    padding: 1.4rem 2rem;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.2s, color 0.2s;
-  }
-
+  .mobile-menu a { text-decoration: none; color: var(--ink); font-size: 1rem; font-weight: 500; letter-spacing: -0.02em; padding: 1.4rem 2rem; border-bottom: 1px solid var(--border); transition: background 0.2s, color 0.2s; }
   .mobile-menu a:last-child { border-bottom: none; }
   .mobile-menu a:hover { background: var(--blue-light); color: var(--blue-mid); }
 
-  /* SUCHOVERLAY */
-  .search-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--bg);
-    z-index: 300;
-    flex-direction: column;
-  }
-
+  .search-overlay { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 300; flex-direction: column; }
   .search-overlay.open { display: flex; }
-
-  .search-header {
-    display: flex;
-    align-items: center;
-    padding: 1.5rem 3rem;
-    border-bottom: 1px solid var(--border);
-    gap: 1.5rem;
-  }
-
-  .search-input {
-    flex: 1;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 300;
-    background: none;
-    border: none;
-    outline: none;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-  }
-
+  .search-header { display: flex; align-items: center; padding: 1.5rem 3rem; border-bottom: 1px solid var(--border); gap: 1.5rem; }
+  .search-input { flex: 1; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 300; background: none; border: none; outline: none; color: var(--ink); letter-spacing: -0.01em; }
   .search-input::placeholder { color: var(--muted); }
-
-  .search-close {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    color: var(--muted);
-    transition: color 0.2s;
-    min-width: 32px;
-    min-height: 32px;
-  }
-
+  .search-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--muted); transition: color 0.2s; min-width: 32px; min-height: 32px; }
   .search-close:hover { color: var(--ink); }
-
-  .search-results {
-    flex: 1;
-    overflow-y: auto;
-    padding: 2rem 3rem;
-  }
-
-  .search-result-item {
-    display: block;
-    text-decoration: none;
-    color: var(--ink);
-    padding: 1.5rem 0;
-    border-bottom: 1px solid var(--border);
-    transition: padding 0.2s;
-  }
-
+  .search-results { flex: 1; overflow-y: auto; padding: 2rem 3rem; }
+  .search-result-item { display: block; text-decoration: none; color: var(--ink); padding: 1.5rem 0; border-bottom: 1px solid var(--border); transition: padding 0.2s; }
   .search-result-item:hover { padding-left: 1rem; }
+  .search-result-title { font-size: 1rem; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+  .search-result-meta { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+  .search-empty { font-family: 'EB Garamond', serif; font-style: italic; font-size: 1.2rem; color: var(--muted); padding: 2rem 0; }
 
-  .search-result-title {
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.3rem;
-  }
+  body.dark { --bg: #0f0f0f; --ink: #f7f5f0; --blue-light: #1a2a33; --blue-mid: #7aafc4; --muted: #666; --border: #2a2a2a; --white: #1a1a1a; }
 
-  .search-result-meta {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-  }
-
-  .search-empty {
-    font-family: 'EB Garamond', serif;
-    font-style: italic;
-    font-size: 1.2rem;
-    color: var(--muted);
-    padding: 2rem 0;
-  }
-
-  /* DUNKELMODUS */
-  body.dark {
-    --bg: #0f0f0f;
-    --ink: #f7f5f0;
-    --blue-light: #1a2a33;
-    --blue-mid: #7aafc4;
-    --muted: #666;
-    --border: #2a2a2a;
-    --white: #1a1a1a;
-  }
-
-  /* HERO */
-  .hero {
-    padding-top: 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    height: 100vh;
-    border-bottom: 1px solid var(--border);
-  }
+  .hero { padding-top: 80px; display: grid; grid-template-columns: 1fr 1fr 1fr; height: 100vh; border-bottom: 1px solid var(--border); }
   .hero-col { border-right: 1px solid var(--border); overflow: hidden; position: relative; }
   .hero-col:last-child { border-right: none; }
   .hero-col-content { padding: 3rem 2.5rem; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
@@ -242,7 +78,6 @@ layout: null
   .hero-blue-block { background: var(--blue-light); flex: 1; display: flex; align-items: flex-end; padding: 2rem 2.5rem; }
   .hero-blue-text { font-family: 'EB Garamond', serif; font-style: italic; font-size: 1rem; color: var(--blue-mid); line-height: 1.5; }
 
-  /* IMAGE STRIP */
   .image-strip { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; height: 320px; border-bottom: 1px solid var(--border); }
   .strip-img { overflow: hidden; border-right: 1px solid var(--border); position: relative; cursor: pointer; }
   .strip-img:last-child { border-right: none; }
@@ -250,7 +85,6 @@ layout: null
   .strip-img:hover .strip-img-inner { transform: scale(1.04); }
   .strip-label { position: absolute; bottom: 1rem; left: 1rem; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.85); background: rgba(15,15,15,0.4); padding: 0.3rem 0.7rem; backdrop-filter: blur(6px); }
 
-  /* SECTION */
   .section-row { display: grid; grid-template-columns: 280px 1fr; border-bottom: 1px solid var(--border); }
   .section-sidebar { padding: 3rem; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.6rem; }
   .section-num { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; }
@@ -258,24 +92,20 @@ layout: null
   .section-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-top: 0.5rem; font-weight: 300; }
   .section-body { padding: 3rem; }
 
-  /* MAP */
   #map { width: 100%; height: 480px; }
 
-  /* REGION FILTER */
   .region-bar { display: flex; align-items: center; border-bottom: 1px solid var(--border); overflow-x: auto; background: var(--bg); }
   .region-bar-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); padding: 1rem 2rem; border-right: 1px solid var(--border); white-space: nowrap; flex-shrink: 0; }
   .region-btn { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 400; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); background: none; border: none; border-right: 1px solid var(--border); padding: 1rem 1.8rem; cursor: pointer; white-space: nowrap; transition: color 0.2s, background 0.2s; flex-shrink: 0; }
   .region-btn:hover { color: var(--ink); background: var(--blue-light); }
   .region-btn.active { color: var(--ink); background: var(--blue-light); font-weight: 500; }
 
-  /* TRIPS */
   .trips-list { display: flex; flex-direction: column; }
   .trip-row { display: grid; grid-template-columns: 80px 1fr 120px 120px 80px; align-items: center; padding: 1.8rem 0; border-bottom: 1px solid var(--border); gap: 2rem; cursor: pointer; transition: background 0.2s, padding 0.2s, margin 0.2s; text-decoration: none; color: var(--ink); }
   .trip-row:last-child { border-bottom: none; }
   .trip-row:hover { background: var(--blue-light); margin: 0 -3rem; padding: 1.8rem 3rem; }
   .trip-index { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.12em; }
   .trip-info h3 { font-size: 1rem; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 0.2rem; }
-  .trip-info span { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
   .trip-region { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); }
   .trip-date { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
   .trip-arrow { font-size: 0.85rem; color: var(--border); text-align: right; transition: color 0.2s, transform 0.2s; }
@@ -284,7 +114,6 @@ layout: null
   .trip-city { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); border: 1px solid var(--border); padding: 0.15rem 0.55rem; }
   .trip-row.hidden { display: none; }
 
-  /* GALLERY */
   .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
   .gal-item { aspect-ratio: 1; overflow: hidden; cursor: pointer; position: relative; }
   .gal-item:nth-child(1) { grid-column: span 2; aspect-ratio: 2/1; }
@@ -293,7 +122,6 @@ layout: null
   .gal-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 1rem 0.8rem; background: linear-gradient(to top, rgba(15,15,15,0.7), transparent); font-size: 0.65rem; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.12em; opacity: 0; transition: opacity 0.3s; }
   .gal-item:hover .gal-label { opacity: 1; }
 
-  /* BLOG */
   .post-wrapper { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
   .post-image-side { min-height: 480px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: flex-end; padding: 3rem; position: relative; overflow: hidden; }
   .post-img-bg { position: absolute; inset: 0; opacity: 0.45; background-size: cover; background-position: center; }
@@ -309,7 +137,24 @@ layout: null
   .read-more { display: inline-block; margin-top: 1.5rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--blue-mid); text-decoration: none; border-bottom: 1px solid var(--blue); padding-bottom: 0.2rem; transition: color 0.2s; }
   .read-more:hover { color: var(--ink); border-color: var(--ink); }
 
-  /* FOOTER */
+  .newsletter-section { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+  .newsletter-left { padding: 3rem; border-right: 1px solid var(--border); }
+  .newsletter-right { padding: 3rem; display: flex; flex-direction: column; justify-content: center; gap: 0.8rem; }
+  .newsletter-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 0.8rem; display: block; }
+  .newsletter-title { font-family: 'EB Garamond', serif; font-style: italic; font-size: 2rem; line-height: 1.2; margin-bottom: 0.8rem; }
+  .newsletter-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+  .embeddable-buttondown-form { display: flex; flex-direction: column; gap: 0.8rem; }
+  .embeddable-buttondown-form label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); }
+  .embeddable-buttondown-form input[type="email"],
+  .embeddable-buttondown-form input[type="text"] { width: 100%; font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; padding: 0.9rem 1.2rem; border: 1px solid var(--border); background: var(--bg); color: var(--ink); outline: none; transition: border-color 0.2s; }
+  .embeddable-buttondown-form input[type="email"]:focus,
+  .embeddable-buttondown-form input[type="text"]:focus { border-color: var(--blue-mid); }
+  .embeddable-buttondown-form input[type="submit"] { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.9rem 2rem; background: var(--ink); color: var(--bg); border: none; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
+  .embeddable-buttondown-form input[type="submit"]:hover { background: var(--blue-mid); }
+  .embeddable-buttondown-form p { font-size: 0.65rem; color: var(--muted); }
+  .embeddable-buttondown-form p a { color: var(--muted); text-decoration: none; }
+  .newsletter-note { font-size: 0.65rem; color: var(--muted); }
+
   footer { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; border-top: 1px solid var(--border); }
   .footer-col { padding: 3rem; border-right: 1px solid var(--border); }
   .footer-col:last-child { border-right: none; }
@@ -322,7 +167,6 @@ layout: null
   footer ul a:hover, footer ul button:hover { color: var(--blue-mid); }
   .footer-copy { font-size: 0.65rem; color: var(--muted); margin-top: 2rem; letter-spacing: 0.08em; }
 
-  /* IMPRESSUM MODAL */
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,15,15,0.5); z-index: 999; backdrop-filter: blur(4px); }
   .modal-overlay.open { display: flex; align-items: center; justify-content: center; }
   .modal-box { background: var(--bg); border: 1px solid var(--border); max-width: 560px; width: 90%; max-height: 80vh; overflow-y: auto; }
@@ -335,34 +179,8 @@ layout: null
   .modal-body h3:first-child { margin-top: 0; }
   .modal-body p { font-size: 0.85rem; line-height: 1.8; color: #555; font-weight: 300; }
 
-  /* ZURÜCK NACH OBEN */
-  .back-to-top {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 44px;
-    height: 44px;
-    background: var(--ink);
-    color: var(--bg);
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s, transform 0.3s;
-    z-index: 100;
-    transform: translateY(10px);
-  }
-
-  .back-to-top.visible {
-    opacity: 1;
-    pointer-events: all;
-    transform: translateY(0);
-  }
-
+  .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 44px; height: 44px; background: var(--ink); color: var(--bg); border: none; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 100; transform: translateY(10px); }
+  .back-to-top.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
   .back-to-top:hover { background: var(--blue-mid); }
 
   ::-webkit-scrollbar { width: 4px; }
@@ -393,6 +211,8 @@ layout: null
 </head>
 <body>
 
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
 <nav>
   <a href="{{ site.baseurl }}/" class="nav-logo">Bricks</a>
   <ul class="nav-links">
@@ -410,7 +230,6 @@ layout: null
   </div>
 </nav>
 
-<!-- MOBILES MENÜ -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#karte" onclick="toggleMenu()">Karte</a>
   <a href="#reisen" onclick="toggleMenu()">Reisen</a>
@@ -418,10 +237,9 @@ layout: null
   <a href="#blog" onclick="toggleMenu()">Blog</a>
 </div>
 
-<!-- SUCHOVERLAY -->
 <div class="search-overlay" id="searchOverlay">
   <div class="search-header">
-    <input class="search-input" id="searchInput" type="text" placeholder="Reise suchen..." oninput="runSearch(this.value)" autofocus>
+    <input class="search-input" id="searchInput" type="text" placeholder="Reise suchen..." oninput="runSearch(this.value)">
     <button class="search-close" onclick="toggleSearch()">✕</button>
   </div>
   <div class="search-results" id="searchResults">
@@ -429,56 +247,56 @@ layout: null
   </div>
 </div>
 
-<!-- HERO -->
+{% assign main_posts = site.posts | where_exp: "p", "p.type != 'day'" %}
+
 <section class="hero">
   <div class="hero-col">
     <div class="hero-col-content">
       <span class="hero-col-label">Reisetagebuch</span>
-      <div class="hero-main-title">Manche<br>bauen<br><em>Häuser.</em><br>Ich samm-<br>le Orte.</div>
+      <div class="hero-main-title">Mehr<br>unterwegs<br>als<br><em>Zuhause.</em></div>
       <span class="hero-col-label" style="border-top:1px solid var(--border);padding-top:1.5rem;">Scroll ↓</span>
     </div>
   </div>
   <div class="hero-col" style="display:flex;flex-direction:column;">
     <div class="hero-stat" style="padding-top:4rem;">
-      <div class="stat-l">Länder</div>
-      <div class="stat-n">{{ site.posts | map: 'region' | uniq | size }}</div>
+      <div class="stat-l">Regionen</div>
+      <div class="stat-n">{{ main_posts | map: "region" | uniq | size }}</div>
     </div>
     <div class="hero-stat">
       <div class="stat-l">Reisen</div>
-      <div class="stat-n">{{ site.posts | size }}</div>
+      <div class="stat-n">{{ main_posts | size }}</div>
     </div>
     <div class="hero-stat">
       <div class="stat-l">Fotos</div>
-      <div class="stat-n">{{ site.posts | map: 'photo_count' | compact | sum }}</div>
+      <div class="stat-n">{{ main_posts | map: "photo_count" | compact | sum }}</div>
     </div>
     <div class="hero-blue-block">
-      <p class="hero-blue-text">Persönliche Geschichten,<br>echte Orte, keine Werbung.</p>
+      <p class="hero-blue-text">Eigentlich wollte ich<br>nur meine Fotos sortieren.</p>
     </div>
   </div>
   <div class="hero-col">
     <div class="hero-col-content">
       <span class="hero-col-label">Über diese Seite</span>
       <p style="font-size:0.85rem;line-height:1.9;color:var(--muted);font-weight:300;">
-        Hier dokumentiere ich meine Reisen mit Fotos, Videos und persönlichen Eindrücken.
-        Kein Reiseblog im klassischen Sinne — eher ein digitales Tagebuch für Menschen,
-        die verstehen wollen wie ein Ort sich wirklich anfühlt.
+        Wer kennt es nicht? 
+        Nach jeder Reise nimmt man sich vor, die Bilder ordentlich abzulegen und die schönsten Erinnerungen festzuhalten. 
+        Stattdessen sammeln sich irgendwann tausende Fotos auf dem Handy, die man im Leben nicht mehr schafft anzuschauen (auch wenn ich es mir fest für meine Rente vornehme ;)). 
+        Deshalb entsteht hier nach und nach meine persönliche Reisetagebuchsammlung – mit allen möglichen Wanderungen, Städtetrips, größeren Abenteuern und auch kurzen Wochenendsausflügen. 
       </p>
       <span class="hero-col-label"></span>
     </div>
   </div>
 </section>
 
-<!-- IMAGE STRIP: die 4 neuesten Beiträge -->
 <div class="image-strip">
-  {% for post in site.posts limit:4 %}
+  {% for post in main_posts limit:4 %}
   <a href="{{ site.baseurl }}{{ post.url }}" class="strip-img" style="text-decoration:none;">
-    <div class="strip-img-inner" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: center;{% else %}background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
+    <div class="strip-img-inner" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: {{ post.cover_position | default: 'center 60%' }};{% else %}background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
     <div class="strip-label">{{ post.title }} — {{ post.date | date: "%b %Y" }}</div>
   </a>
   {% endfor %}
 </div>
 
-<!-- KARTE -->
 <div class="section-row" id="karte">
   <div class="section-sidebar">
     <span class="section-num">01</span>
@@ -490,7 +308,6 @@ layout: null
   </div>
 </div>
 
-<!-- REISEN -->
 <div class="section-row" id="reisen">
   <div class="section-sidebar">
     <span class="section-num">02</span>
@@ -498,28 +315,24 @@ layout: null
     <p class="section-desc">Alle Reisen chronologisch. Klick für Fotos, Berichte und Details.</p>
   </div>
   <div class="section-body" style="padding:0;">
-
     <div class="region-bar">
-      <span class="region-bar-label">Filter</span>
+      <span class="region-bar-label">Unterwegs In</span>
       <button class="region-btn active" onclick="filterRegion('alle', this)">Alle</button>
-      {% assign regions = site.posts | map: 'region' | uniq | sort %}
+      {% assign regions = main_posts | map: "region" | uniq | sort %}
       {% for region in regions %}
       <button class="region-btn" onclick="filterRegion('{{ region }}', this)">{{ region }}</button>
       {% endfor %}
     </div>
-
     <div class="trips-list" style="padding: 0 3rem;">
-      {% for post in site.posts %}
+      {% for post in main_posts %}
       <a class="trip-row" href="{{ site.baseurl }}{{ post.url }}" data-region="{{ post.region }}">
         <span class="trip-index">{{ forloop.index | prepend: '00' | slice: -3, 3 }}</span>
         <div class="trip-info">
           <h3>{{ post.title }}</h3>
           <div class="trip-cities">
-            {% if post.cities %}
-              {% for city in post.cities %}
-              <span class="trip-city">{{ city }}</span>
-              {% endfor %}
-            {% endif %}
+            {% for city in post.cities %}
+            <span class="trip-city">{{ city }}</span>
+            {% endfor %}
           </div>
         </div>
         <span class="trip-region">{{ post.region }}</span>
@@ -531,7 +344,6 @@ layout: null
   </div>
 </div>
 
-<!-- GALERIE -->
 <div class="section-row" id="galerie">
   <div class="section-sidebar">
     <span class="section-num">03</span>
@@ -540,7 +352,7 @@ layout: null
   </div>
   <div class="section-body">
     <div class="gallery-grid">
-      {% for post in site.posts limit:7 %}
+      {% for post in main_posts limit:7 %}
       <a class="gal-item" href="{{ site.baseurl }}{{ post.url }}" style="text-decoration:none;">
         <div class="gal-inner" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: {{ post.cover_position | default: 'center 60%' }};{% else %}background: linear-gradient(140deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
         <div class="gal-label">{{ post.title }}</div>
@@ -550,7 +362,6 @@ layout: null
   </div>
 </div>
 
-<!-- BLOG -->
 <div class="section-row" id="blog" style="border-bottom:none;">
   <div class="section-sidebar">
     <span class="section-num">04</span>
@@ -558,10 +369,10 @@ layout: null
     <p class="section-desc">Persönliche Einträge aus dem Reisetagebuch.</p>
   </div>
   <div class="section-body" style="padding:0;">
-    {% for post in site.posts %}
+    {% for post in main_posts %}
     <div class="post-wrapper">
       <div class="post-image-side">
-        <div class="post-img-bg" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: center;{% else %}background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
+        <div class="post-img-bg" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: {{ post.cover_position | default: 'center 60%' }};{% else %}background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
         <div class="post-img-meta">
           <p class="post-img-sub">{{ post.date | date: "%d. %B %Y" }}{% if post.region %} · {{ post.region }}{% endif %}</p>
           <h2 class="post-img-title">{{ post.title }}</h2>
@@ -570,9 +381,7 @@ layout: null
       <div class="post-text-side">
         <div class="post-tags">
           {% if post.region %}<span class="tag blue">{{ post.region }}</span>{% endif %}
-          {% for tag in post.tags %}
-          <span class="tag">{{ tag }}</span>
-          {% endfor %}
+          {% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
         </div>
         <div class="post-body">
           <p>{{ post.excerpt | strip_html | truncatewords: 40 }}</p>
@@ -584,10 +393,32 @@ layout: null
   </div>
 </div>
 
-<!-- ZURÜCK NACH OBEN -->
-<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="newsletter-section">
+  <div class="newsletter-left" style="background: var(--blue-light);">
+    <span class="newsletter-label">Newsletter</span>
+    <h2 class="newsletter-title">Postkarte aus der Ferne.</h2>
+    <p class="newsletter-desc">Neue Beiträge, wenn wieder ein Abenteuer dazukommt. Nicht regelmäßig, nur dann, wenn es etwas zu erzählen gibt.</p>
+  </div>
+  <div class="newsletter-right">
+    <form action="https://buttondown.com/api/emails/embed-subscribe/liselipiseli" method="post" class="embeddable-buttondown-form">
+      <label for="bd-email-home">E-Mail Adresse</label>
+      <input type="email" name="email" id="bd-email-home" placeholder="deine@email.de" required />
+      <label for="first_name_home">Vorname (optional)</label>
+      <input type="text" name="metadata__first_name" id="first_name_home" placeholder="Dein Name" />
+      <label for="gender_home">Ansprache (optional)</label>
+      <select name="metadata__gender" id="gender_home" style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;padding:0.9rem 1.2rem;border:1px solid var(--border);background:var(--bg);color:var(--ink);outline:none;width:100%;appearance:none;cursor:pointer;">
+        <option value="">Bitte wählen</option>
+        <option value="weiblich">Sie / ihr (weiblich)</option>
+        <option value="maennlich">Er / ihm (männlich)</option>
+        <option value="divers">Divers / keine Angabe</option>
+      </select>
+      <input type="submit" value="Anmelden" />
+      <p><a href="https://buttondown.com/refer/liselipiseli" target="_blank">Powered by Buttondown.</a></p>
+    </form>
+    <p class="newsletter-note">Falls du keine Postkarte mehr erhalten willst: Einfach in deinen Spam verschieben oder halt wieder abbstellen.</p>
+  </div>
+</div>
 
-<!-- IMPRESSUM MODAL -->
 <div class="modal-overlay" id="impressumModal" onclick="closeModal(event)">
   <div class="modal-box">
     <div class="modal-header">
@@ -610,7 +441,7 @@ layout: null
 <footer>
   <div class="footer-col">
     <div class="footer-logo">Bricks</div>
-    <p class="footer-tagline">Persönliche Reisedokumentation.<br>Keine Werbung, keine Kooperationen.</p>
+    <p class="footer-tagline">Persönliches Reisetagebuch.<br>Wanderungen, Städtetrips und Erinnerungen, die sonst zwischen tausenden Fotos verloren gehen würden.</p>
     <p class="footer-copy">© {{ 'now' | date: "%Y" }} Travel Blog von Lisa</p>
   </div>
   <div class="footer-col">
@@ -626,7 +457,7 @@ layout: null
   <div class="footer-col">
     <h4>Regionen</h4>
     <ul>
-      {% assign regions = site.posts | map: 'region' | uniq | sort %}
+      {% assign regions = main_posts | map: "region" | uniq | sort %}
       {% for region in regions %}
       <li><a href="{{ site.baseurl }}/region/{{ region | downcase | replace: ' ', '-' }}/">{{ region }}</a></li>
       {% endfor %}
@@ -643,41 +474,44 @@ layout: null
 </footer>
 
 <script>
-// ZURÜCK NACH OBEN
 const btt = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-  btt.classList.toggle('visible', window.scrollY > 400);
-});
+window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > 400); });
 
-// BURGER MENU
 function toggleMenu() {
-  const m = document.getElementById('mobileMenu');
-  const b = document.getElementById('burger');
-  m.classList.toggle('open');
-  b.classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('burger').classList.toggle('open');
 }
 
-// DUNKELMODUS
 function toggleDark() {
   document.body.classList.toggle('dark');
-  const btn = document.getElementById('darkBtn');
   const isDark = document.body.classList.contains('dark');
-  btn.innerHTML = isDark ? '&#9788;' : '&#9790;';
+  document.getElementById('darkBtn').innerHTML = isDark ? '&#9788;' : '&#9790;';
   localStorage.setItem('darkmode', isDark ? '1' : '0');
 }
-
-// Dunkelmodus beim Laden wiederherstellen
 if (localStorage.getItem('darkmode') === '1') {
   document.body.classList.add('dark');
   document.getElementById('darkBtn').innerHTML = '&#9788;';
 }
 
-// SUCHE
+function closeModal(e) {
+  if (e.target === document.getElementById('impressumModal')) {
+    document.getElementById('impressumModal').classList.remove('open');
+  }
+}
+
+function filterRegion(region, btn) {
+  document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.trip-row[data-region]').forEach(row => {
+    row.classList.toggle('hidden', region !== 'alle' && row.dataset.region !== region);
+  });
+}
+
 const allPosts = [
-  {% for post in site.posts %}
-  {
+  {% for post in main_posts %}{
     title: {{ post.title | jsonify }},
     region: {{ post.region | jsonify }},
+    country: {{ post.country | jsonify }},
     cities: {{ post.cities | jsonify }},
     tags: {{ post.tags | jsonify }},
     date: "{{ post.date | date: '%B %Y' }}",
@@ -706,78 +540,50 @@ document.addEventListener('keydown', e => {
 
 function runSearch(q) {
   const res = document.getElementById('searchResults');
-  if (!q.trim()) {
-    res.innerHTML = '<p class="search-empty">Tippe um zu suchen...</p>';
-    return;
-  }
+  if (!q.trim()) { res.innerHTML = '<p class="search-empty">Tippe um zu suchen...</p>'; return; }
   const term = q.toLowerCase();
   const hits = allPosts.filter(p =>
     (p.title && p.title.toLowerCase().includes(term)) ||
     (p.region && p.region.toLowerCase().includes(term)) ||
+    (p.country && p.country.toLowerCase().includes(term)) ||
     (p.cities && p.cities.join(' ').toLowerCase().includes(term)) ||
     (p.tags && p.tags.join(' ').toLowerCase().includes(term))
   );
-  if (!hits.length) {
-    res.innerHTML = '<p class="search-empty">Keine Ergebnisse gefunden.</p>';
-    return;
-  }
-  res.innerHTML = hits.map(p => `
+  res.innerHTML = hits.length ? hits.map(p => `
     <a class="search-result-item" href="${p.url}">
       <div class="search-result-title">${p.title}</div>
       <div class="search-result-meta">${p.region || ''} · ${p.date}</div>
-    </a>
-  `).join('');
+    </a>`).join('') : '<p class="search-empty">Keine Ergebnisse gefunden.</p>';
 }
 
-// KARTE
 const map = L.map('map', { center: [25, 15], zoom: 2, zoomControl: true, scrollWheelZoom: false });
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   attribution: '© OpenStreetMap contributors © CARTO', maxZoom: 19
 }).addTo(map);
 
 const icon = L.divIcon({
-  html: `<div style="width:8px;height:8px;background:#7aafc4;border:1.5px solid #0f0f0f;border-radius:50%;"></div>`,
+  html: '<div style="width:8px;height:8px;background:#7aafc4;border:1.5px solid #0f0f0f;border-radius:50%;"></div>',
   className: '', iconSize: [8,8], iconAnchor: [4,4]
 });
 
-// Pins aus Jekyll-Beiträgen
-const posts = [
-  {% for post in site.posts %}
-  {% if post.lat and post.lng %}
+const mapPosts = [
+  {% for post in site.posts %}{% unless post.lat == nil or post.lng == nil %}
+  {% assign pin_name = post.title %}
+  {% if post.type == "day" %}{% assign pin_name = post.trip_title %}{% endif %}
   {
     lat: {{ post.lat }},
     lng: {{ post.lng }},
-    name: "{{ post.title }}",
+    name: {{ pin_name | jsonify }},
     date: "{{ post.date | date: '%B %Y' }}",
     url: "{{ site.baseurl }}{{ post.url }}"
-  }{% unless forloop.last %},{% endunless %}
-  {% endif %}
-  {% endfor %}
+  },
+  {% endunless %}{% endfor %}
 ];
 
-posts.forEach(p => {
+mapPosts.forEach(p => {
   L.marker([p.lat, p.lng], { icon }).addTo(map)
     .bindPopup(`<a href="${p.url}" style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:#0f0f0f;text-decoration:none;">${p.name}</a><br><span style="font-size:11px;color:#999;font-weight:300;">${p.date}</span>`);
 });
-
-// REGION FILTER
-function closeModal(e) {
-  if (e.target === document.getElementById('impressumModal')) {
-    document.getElementById('impressumModal').classList.remove('open');
-  }
-}
-
-function filterRegion(region, btn) {
-  document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.trip-row[data-region]').forEach(row => {
-    if (region === 'alle' || row.dataset.region === region) {
-      row.classList.remove('hidden');
-    } else {
-      row.classList.add('hidden');
-    }
-  });
-}
 </script>
 </body>
 </html>
