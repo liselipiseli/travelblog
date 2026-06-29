@@ -1,5 +1,5 @@
 ---
-layout: day 
+layout: day
 type: day
 trip_id: Athen
 trip_title: "Die drei Säulen Athens"

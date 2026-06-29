@@ -114,13 +114,31 @@ layout: null
   .trip-city { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); border: 1px solid var(--border); padding: 0.15rem 0.55rem; }
   .trip-row.hidden { display: none; }
 
-  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
-  .gal-item { aspect-ratio: 1; overflow: hidden; cursor: pointer; position: relative; }
-  .gal-item:nth-child(1) { grid-column: span 2; aspect-ratio: 2/1; }
+  /* GALERIE */
+  .gallery-trip-block { border-bottom: 1px solid var(--border); }
+  .gallery-trip-block:last-child { border-bottom: none; }
+  .gallery-trip-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); }
+  .gallery-trip-title { font-size: 0.85rem; font-weight: 500; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); transition: color 0.2s; }
+  .gallery-trip-title:hover { color: var(--blue-mid); }
+  .gallery-trip-count { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); }
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; padding: 3px; }
+  .gal-item { aspect-ratio: 1; overflow: hidden; cursor: zoom-in; position: relative; }
+  .gal-item.hidden-img { display: none; }
+  .gal-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease, opacity 0.2s; }
+  .gal-item:hover img { transform: scale(1.04); opacity: 0.92; }
   .gal-inner { width: 100%; height: 100%; transition: transform 0.5s ease; background-size: cover; background-position: center; }
   .gal-item:hover .gal-inner { transform: scale(1.04); }
   .gal-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 1rem 0.8rem; background: linear-gradient(to top, rgba(15,15,15,0.7), transparent); font-size: 0.65rem; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.12em; opacity: 0; transition: opacity 0.3s; }
   .gal-item:hover .gal-label { opacity: 1; }
+  .gallery-show-more { width: 100%; padding: 1rem; background: none; border: none; border-top: 1px solid var(--border); font-family: 'Space Grotesk', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .gallery-show-more:hover { background: var(--blue-light); color: var(--ink); }
+
+  /* LIGHTBOX */
+  .lightbox-overlay { display: none; position: fixed; inset: 0; background: rgba(15,15,15,0.92); z-index: 999; align-items: center; justify-content: center; cursor: zoom-out; padding: 3rem; }
+  .lightbox-overlay.open { display: flex; }
+  .lightbox-overlay img { max-width: 100%; max-height: 100%; object-fit: contain; cursor: default; }
+  .lightbox-close { position: fixed; top: 2rem; right: 2rem; background: none; border: none; color: #f7f5f0; font-size: 1.5rem; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.2s; }
+  .lightbox-close:hover { opacity: 0.7; }
 
   .post-wrapper { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
   .post-image-side { min-height: 480px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: flex-end; padding: 3rem; position: relative; overflow: hidden; }
@@ -167,7 +185,7 @@ layout: null
   footer ul a:hover, footer ul button:hover { color: var(--blue-mid); }
   .footer-copy { font-size: 0.65rem; color: var(--muted); margin-top: 2rem; letter-spacing: 0.08em; }
 
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,15,15,0.5); z-index: 999; backdrop-filter: blur(4px); }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,15,15,0.5); z-index: 998; backdrop-filter: blur(4px); }
   .modal-overlay.open { display: flex; align-items: center; justify-content: center; }
   .modal-box { background: var(--bg); border: 1px solid var(--border); max-width: 560px; width: 90%; max-height: 80vh; overflow-y: auto; }
   .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); }
@@ -199,7 +217,6 @@ layout: null
     .trip-row { grid-template-columns: 40px 1fr 1fr; }
     .trip-region, .trip-date { display: none; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    .gal-item:nth-child(1) { grid-column: span 2; }
     .post-wrapper { grid-template-columns: 1fr; }
     .post-image-side { min-height: 300px; }
     footer { grid-template-columns: 1fr 1fr; }
@@ -212,6 +229,12 @@ layout: null
 <body>
 
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- LIGHTBOX -->
+<button class="lightbox-close" onclick="closeLightbox()">✕</button>
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="">
+</div>
 
 <nav>
   <a href="{{ site.baseurl }}/" class="nav-logo">Bricks</a>
@@ -278,10 +301,7 @@ layout: null
     <div class="hero-col-content">
       <span class="hero-col-label">Über diese Seite</span>
       <p style="font-size:0.85rem;line-height:1.9;color:var(--muted);font-weight:300;">
-        Wer kennt es nicht? 
-        Nach jeder Reise nimmt man sich vor, die Bilder ordentlich abzulegen und die schönsten Erinnerungen festzuhalten. 
-        Stattdessen sammeln sich irgendwann tausende Fotos auf dem Handy, die man im Leben nicht mehr schafft anzuschauen (auch wenn ich es mir fest für meine Rente vornehme ;)). 
-        Deshalb entsteht hier nach und nach meine persönliche Reisetagebuchsammlung – mit allen möglichen Wanderungen, Städtetrips, größeren Abenteuern und auch kurzen Wochenendsausflügen. 
+        Wer kennt es nicht? Nach jeder Reise nimmt man sich vor, die Bilder ordentlich abzulegen und die schönsten Erinnerungen festzuhalten. Stattdessen sammeln sich irgendwann tausende Fotos auf dem Handy, die man im Leben nicht mehr schafft anzuschauen. Deshalb entsteht hier nach und nach meine persönliche Reisetagebuchsammlung.
       </p>
       <span class="hero-col-label"></span>
     </div>
@@ -344,21 +364,59 @@ layout: null
   </div>
 </div>
 
+<!-- GALERIE -->
 <div class="section-row" id="galerie">
   <div class="section-sidebar">
     <span class="section-num">03</span>
     <div class="section-name">Galerie</div>
-    <p class="section-desc">Ausgewählte Bilder aus allen Reisen. Hover für Ortsangabe.</p>
+    <p class="section-desc">Bilder aus allen Reisen. Klick für Vollansicht.</p>
   </div>
-  <div class="section-body">
-    <div class="gallery-grid">
-      {% for post in main_posts limit:7 %}
-      <a class="gal-item" href="{{ site.baseurl }}{{ post.url }}" style="text-decoration:none;">
-        <div class="gal-inner" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: {{ post.cover_position | default: 'center 60%' }};{% else %}background: linear-gradient(140deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
-        <div class="gal-label">{{ post.title }}</div>
-      </a>
+  <div class="section-body" style="padding:0;">
+    {% for post in main_posts %}
+      {% assign day_posts = site.posts | where: "trip_id", post.trip_id | where: "type", "day" %}
+      {% assign all_images = "" | split: "" %}
+      {% for day in day_posts %}
+        {% if day.images %}
+          {% for img in day.images %}
+            {% assign all_images = all_images | push: img %}
+          {% endfor %}
+        {% endif %}
       {% endfor %}
-    </div>
+
+      {% if all_images.size > 0 %}
+      <div class="gallery-trip-block">
+        <div class="gallery-trip-header">
+          <a href="{{ site.baseurl }}{{ post.url }}" class="gallery-trip-title">{{ post.title }}</a>
+          <span class="gallery-trip-count">{{ all_images.size }} Bilder</span>
+        </div>
+        <div class="gallery-grid">
+          {% for img in all_images %}
+          <div class="gal-item{% if forloop.index > 4 %} hidden-img{% endif %}" data-trip="{{ post.trip_id }}">
+            <img src="{{ site.baseurl }}/assets/images/{{ img }}" alt="{{ post.title }}" loading="lazy">
+            <div class="gal-label">{{ post.title }}</div>
+          </div>
+          {% endfor %}
+        </div>
+        {% if all_images.size > 4 %}
+        <button class="gallery-show-more" onclick="showMore('{{ post.trip_id }}', this)">
+          Alle {{ all_images.size }} Bilder anzeigen ↓
+        </button>
+        {% endif %}
+      </div>
+      {% elsif post.cover_image %}
+      <div class="gallery-trip-block">
+        <div class="gallery-trip-header">
+          <a href="{{ site.baseurl }}{{ post.url }}" class="gallery-trip-title">{{ post.title }}</a>
+          <span class="gallery-trip-count">Cover</span>
+        </div>
+        <div class="gallery-grid">
+          <div class="gal-item" style="grid-column: span 4; aspect-ratio: 4/1;">
+            <img src="{{ site.baseurl }}/assets/images/{{ post.cover_image }}" alt="{{ post.title }}" loading="lazy" style="object-position: {{ post.cover_position | default: 'center 60%' }};">
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
   </div>
 </div>
 
@@ -415,7 +473,7 @@ layout: null
       <input type="submit" value="Anmelden" />
       <p><a href="https://buttondown.com/refer/liselipiseli" target="_blank">Powered by Buttondown.</a></p>
     </form>
-    <p class="newsletter-note">Falls du keine Postkarte mehr erhalten willst: Einfach in deinen Spam verschieben oder halt wieder abbstellen.</p>
+    <p class="newsletter-note">Falls du keine Postkarte mehr erhalten willst: Einfach in deinen Spam verschieben oder halt wieder abstellen.</p>
   </div>
 </div>
 
@@ -507,6 +565,25 @@ function filterRegion(region, btn) {
   });
 }
 
+// GALERIE LIGHTBOX
+function showMore(tripId, btn) {
+  document.querySelectorAll(`.gal-item[data-trip="${tripId}"]`).forEach(el => {
+    el.classList.remove('hidden-img');
+  });
+  btn.remove();
+}
+
+document.addEventListener('click', e => {
+  const img = e.target.closest('.gal-item img');
+  if (!img) return;
+  document.getElementById('lightboxImg').src = img.src;
+  document.getElementById('lightboxOverlay').classList.add('open');
+});
+
+function closeLightbox() {
+  document.getElementById('lightboxOverlay').classList.remove('open');
+}
+
 const allPosts = [
   {% for post in main_posts %}{
     title: {{ post.title | jsonify }},
@@ -532,6 +609,7 @@ function toggleSearch() {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
+    closeLightbox();
     document.getElementById('searchOverlay').classList.remove('open');
     document.getElementById('mobileMenu').classList.remove('open');
     document.getElementById('burger').classList.remove('open');
