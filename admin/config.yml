@@ -3,7 +3,7 @@ backend:
   repo: liselipiseli/travelblog
   branch: main
 
-publish_mode: simple
+publish_mode: editorial_workflow
 
 media_folder: "assets/images"
 public_folder: ""
@@ -26,6 +26,7 @@ collections:
     create: true
     extension: "md"
     slug: "{{year}}-{{month}}-{{day}}-{{fields.trip_id}}"
+    preview_path: "{{year}}/{{month}}/{{day}}/{{trip_id}}/"
     filter: { field: "type", value: "trip" }
     summary: "{{title}} — {{region}}"
     sortable_fields: ["date", "title", "region"]
@@ -99,6 +100,7 @@ collections:
     create: true
     extension: "md"
     slug: "{{year}}-{{month}}-{{day}}-{{fields.trip_id}}-tag-{{fields.day_number}}"
+    preview_path: "{{year}}/{{month}}/{{day}}/{{trip_id}}-tag-{{day_number}}/"
     filter: { field: "type", value: "day" }
     summary: "Tag {{day_number}} — {{title}}"
     sortable_fields: ["date", "day_number", "title"]
@@ -107,12 +109,20 @@ collections:
       - { label: "Typ", name: "type", widget: "hidden", default: "day" }
       - label: "Reise-ID"
         name: "trip_id"
-        widget: "string"
-        hint: "Muss exakt gleich sein wie bei der zugehörigen Reise-Übersicht!"
+        widget: "relation"
+        collection: "trips"
+        search_fields: ["trip_id", "title"]
+        display_fields: ["title"]
+        value_field: "trip_id"
+        hint: "Wähle die zugehörige Reise aus der Liste — verhindert Tippfehler"
       - label: "Reise-Titel"
         name: "trip_title"
-        widget: "string"
-        hint: "Muss exakt gleich sein wie der Titel der Reise-Übersicht!"
+        widget: "relation"
+        collection: "trips"
+        search_fields: ["trip_id", "title"]
+        display_fields: ["title"]
+        value_field: "title"
+        hint: "Wähle hier die gleiche Reise wie oben aus"
       - { label: "Titel des Tages", name: "title", widget: "string" }
       - label: "Datum"
         name: "date"
