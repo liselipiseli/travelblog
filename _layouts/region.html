@@ -354,7 +354,8 @@ layout: null
 </div>
 
 <!-- ANDERE REGIONEN -->
-{% assign all_regions = site.posts | where_exp: 'p', 'p.type != "day"' | map: 'region' | uniq | sort %}
+{% assign regional_posts = site.posts | where_exp: 'p', 'p.type != "day" and p.region' %}
+{% assign all_regions = regional_posts | map: 'region' | uniq | sort %}
 {% assign other_regions = all_regions | where_exp: 'r', 'r != page.region' %}
 {% if other_regions.size > 0 %}
 <div class="other-regions">
