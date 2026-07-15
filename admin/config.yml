@@ -1,0 +1,151 @@
+backend:
+  name: github
+  repo: liselipiseli/travelblog
+  branch: main
+
+publish_mode: simple
+
+media_folder: "assets/images"
+public_folder: ""
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+site_url: "https://liselipiseli.github.io/travelblog/"
+display_url: "https://liselipiseli.github.io/travelblog/"
+
+locale: "de"
+
+collections:
+  - name: "trips"
+    label: "Reisen (Übersicht)"
+    label_singular: "Reise"
+    folder: "_posts"
+    create: true
+    extension: "md"
+    slug: "{{year}}-{{month}}-{{day}}-{{fields.trip_id}}"
+    filter: { field: "type", value: "trip" }
+    summary: "{{title}} — {{region}}"
+    sortable_fields: ["date", "title", "region"]
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "trip" }
+      - { label: "Typ", name: "type", widget: "hidden", default: "trip" }
+      - label: "Reise-ID (Kurzname)"
+        name: "trip_id"
+        widget: "string"
+        hint: "Kleingeschrieben, ohne Leerzeichen/Umlaute, z.B. 'rom'. Muss bei der Übersicht UND allen Tagen dieser Reise exakt gleich sein!"
+      - { label: "Titel", name: "title", widget: "string" }
+      - label: "Datum (Reisebeginn)"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        picker_utc: true
+      - label: "Region"
+        name: "region"
+        widget: "select"
+        options: ["Europa", "Asien", "Afrika", "Amerika", "Ozeanien"]
+      - { label: "Land", name: "country", widget: "string", required: false }
+      - label: "Städte"
+        name: "cities"
+        widget: "list"
+        required: false
+        hint: "Eine Stadt pro Zeile"
+      - label: "Dauer"
+        name: "duration"
+        widget: "string"
+        required: false
+        hint: "z.B. '7 Tage'"
+      - { label: "Jahreszeit", name: "season", widget: "string", required: false }
+      - label: "Cover-Farbe (hell)"
+        name: "cover_color"
+        widget: "color"
+        required: false
+        default: "#a8c4d4"
+      - label: "Cover-Farbe (dunkel)"
+        name: "cover_color_dark"
+        widget: "color"
+        required: false
+        default: "#5a90aa"
+      - label: "Cover-Bild"
+        name: "cover_image"
+        widget: "image"
+        required: false
+        hint: "Wird automatisch nach assets/images hochgeladen"
+      - label: "Bildposition"
+        name: "cover_position"
+        widget: "string"
+        required: false
+        default: "center 60%"
+        hint: "CSS object-position, z.B. 'center 60%'"
+      - label: "Foto-Anzahl"
+        name: "photo_count"
+        widget: "number"
+        required: false
+        default: 0
+        value_type: "int"
+      - label: "Einleitungstext"
+        name: "body"
+        widget: "markdown"
+        required: false
+
+  - name: "days"
+    label: "Reisetage"
+    label_singular: "Tag"
+    folder: "_posts"
+    create: true
+    extension: "md"
+    slug: "{{year}}-{{month}}-{{day}}-{{fields.trip_id}}-tag-{{fields.day_number}}"
+    filter: { field: "type", value: "day" }
+    summary: "Tag {{day_number}} — {{title}}"
+    sortable_fields: ["date", "day_number", "title"]
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "day" }
+      - { label: "Typ", name: "type", widget: "hidden", default: "day" }
+      - label: "Reise-ID"
+        name: "trip_id"
+        widget: "string"
+        hint: "Muss exakt gleich sein wie bei der zugehörigen Reise-Übersicht!"
+      - label: "Reise-Titel"
+        name: "trip_title"
+        widget: "string"
+        hint: "Muss exakt gleich sein wie der Titel der Reise-Übersicht!"
+      - { label: "Titel des Tages", name: "title", widget: "string" }
+      - label: "Datum"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        picker_utc: true
+      - { label: "Tag-Nummer", name: "day_number", widget: "number", value_type: "int" }
+      - { label: "Ort", name: "location", widget: "string", required: false }
+      - { label: "Wetter", name: "weather", widget: "string", required: false }
+      - { label: "Highlight des Tages", name: "highlight", widget: "string", required: false }
+      - label: "Breitengrad (lat)"
+        name: "lat"
+        widget: "number"
+        value_type: "float"
+        required: false
+        hint: "Google Maps: Rechtsklick auf den Ort → erste Zahl"
+      - label: "Längengrad (lng)"
+        name: "lng"
+        widget: "number"
+        value_type: "float"
+        required: false
+        hint: "Google Maps: Rechtsklick auf den Ort → zweite Zahl"
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+        hint: "Ein Stichwort pro Zeile"
+      - label: "Galerie-Bilder"
+        name: "images"
+        widget: "list"
+        required: false
+        hint: "Diese Bilder erscheinen in der Galerie der Reise-Übersicht"
+        field: { label: "Bild", name: "image", widget: "image" }
+      - { label: "Haupttext", name: "body", widget: "markdown" }
