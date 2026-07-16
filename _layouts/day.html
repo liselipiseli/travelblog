@@ -87,12 +87,34 @@ layout: null
     }
 
     .day-hero-right {
+      position: relative;
+      overflow: hidden;
       padding: 3rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       min-width: 0;
     }
+
+    .day-hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.4;
+      z-index: 0;
+    }
+
+    .day-hero-right::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, var(--bg) 92%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .day-hero-right > * { position: relative; z-index: 1; }
 
     .day-trip-link { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .day-trip-link:hover { color: var(--blue-mid); }
@@ -276,6 +298,9 @@ layout: null
     {% endif %}
   </div>
   <div class="day-hero-right">
+    {% if page.cover_image %}
+    <div class="day-hero-bg" style="background-image: url('{{ site.baseurl }}/assets/images/{{ page.cover_image }}'); background-position: {{ page.cover_position | default: 'center 60%' }};"></div>
+    {% endif %}
     <h1 class="day-title">{{ page.title }}</h1>
     <div class="day-date-row">
       <span class="day-date">{{ page.date | date: "%d. %B %Y" }}</span>
