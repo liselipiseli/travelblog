@@ -271,7 +271,15 @@ layout: null
 </div>
 
 {% assign main_posts = site.posts | where_exp: "p", "p.type != 'day'" %}
-
+{% assign total_photos = 0 %}
+{% for trip in main_posts %}
+  {% assign trip_days = site.posts | where: "trip_id", trip.trip_id | where: "type", "day" %}
+  {% for day in trip_days %}
+    {% if day.images %}
+      {% assign total_photos = total_photos | plus: day.images.size %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
 <section class="hero">
   <div class="hero-col">
     <div class="hero-col-content">
@@ -290,7 +298,7 @@ layout: null
       <div class="stat-n">{{ main_posts | size }}</div>
     </div>
     <div class="hero-stat">
-      <div class="stat-l">Fotos</div>
+     <div class="stat-n">{{ total_photos }}</div>
       <div class="stat-n">{{ main_posts | map: "photo_count" | compact | sum }}</div>
     </div>
     <div class="hero-blue-block">
