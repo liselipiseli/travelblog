@@ -65,25 +65,18 @@ layout: null
 
   body.dark { --bg: #0f0f0f; --ink: #f7f5f0; --blue-light: #1a2a33; --blue-mid: #7aafc4; --muted: #666; --border: #2a2a2a; --white: #1a1a1a; }
 
-  .hero { padding-top: 80px; display: grid; grid-template-columns: 1fr 1fr 1fr; height: 100vh; border-bottom: 1px solid var(--border); }
+  .hero { padding-top: 80px; display: grid; grid-template-columns: 1fr 1fr 1fr; min-height: 62vh; border-bottom: 1px solid var(--border); }
   .hero-col { border-right: 1px solid var(--border); overflow: hidden; position: relative; }
   .hero-col:last-child { border-right: none; }
   .hero-col-content { padding: 3rem 2.5rem; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
   .hero-col-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); font-weight: 400; }
-  .hero-main-title { font-size: clamp(3rem, 5.5vw, 6rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; text-transform: uppercase; }
+  .hero-main-title { font-size: clamp(2.6rem, 4.5vw, 5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; text-transform: uppercase; }
   .hero-main-title em { font-family: 'EB Garamond', serif; font-style: italic; font-weight: 400; font-size: 0.9em; color: var(--blue-mid); }
-  .hero-stat { padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-end; }
-  .stat-n { font-size: 3.5rem; font-weight: 700; letter-spacing: -0.05em; line-height: 1; }
+  .hero-stat { padding: 1.6rem 2.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-end; }
+  .stat-n { font-size: 3rem; font-weight: 700; letter-spacing: -0.05em; line-height: 1; }
   .stat-l { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); text-align: right; padding-bottom: 0.4rem; }
   .hero-blue-block { background: var(--blue-light); flex: 1; display: flex; align-items: flex-end; padding: 2rem 2.5rem; }
   .hero-blue-text { font-family: 'EB Garamond', serif; font-style: italic; font-size: 1rem; color: var(--blue-mid); line-height: 1.5; }
-
-  .image-strip { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; height: 320px; border-bottom: 1px solid var(--border); }
-  .strip-img { overflow: hidden; border-right: 1px solid var(--border); position: relative; cursor: pointer; }
-  .strip-img:last-child { border-right: none; }
-  .strip-img-inner { width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); background-size: cover; background-position: center; }
-  .strip-img:hover .strip-img-inner { transform: scale(1.04); }
-  .strip-label { position: absolute; bottom: 1rem; left: 1rem; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.85); background: rgba(15,15,15,0.4); padding: 0.3rem 0.7rem; backdrop-filter: blur(6px); }
 
   .section-row { display: grid; grid-template-columns: 280px 1fr; border-bottom: 1px solid var(--border); }
   .section-sidebar { padding: 3rem; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.6rem; }
@@ -92,7 +85,7 @@ layout: null
   .section-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-top: 0.5rem; font-weight: 300; }
   .section-body { padding: 3rem; }
 
-  #map { width: 100%; height: 480px; }
+  #map { width: 100%; height: 440px; }
 
   .region-bar { display: flex; align-items: center; border-bottom: 1px solid var(--border); overflow-x: auto; background: var(--bg); }
   .region-bar-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); padding: 1rem 2rem; border-right: 1px solid var(--border); white-space: nowrap; flex-shrink: 0; }
@@ -209,9 +202,7 @@ layout: null
     nav { padding: 1.2rem 1.5rem; }
     .nav-links { display: none; }
     .burger { display: flex; }
-    .hero { grid-template-columns: 1fr; height: auto; }
-    .image-strip { grid-template-columns: 1fr 1fr; height: auto; }
-    .strip-img { aspect-ratio: 1; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
     .section-row { grid-template-columns: 1fr; }
     .section-sidebar { border-right: none; border-bottom: 1px solid var(--border); }
     .trip-row { grid-template-columns: 40px 1fr 1fr; }
@@ -271,6 +262,7 @@ layout: null
 </div>
 
 {% assign main_posts = site.posts | where_exp: "p", "p.type != 'day'" %}
+
 {% assign total_photos = 0 %}
 {% for trip in main_posts %}
   {% assign trip_days = site.posts | where: "trip_id", trip.trip_id | where: "type", "day" %}
@@ -280,6 +272,7 @@ layout: null
     {% endif %}
   {% endfor %}
 {% endfor %}
+
 <section class="hero">
   <div class="hero-col">
     <div class="hero-col-content">
@@ -289,7 +282,7 @@ layout: null
     </div>
   </div>
   <div class="hero-col" style="display:flex;flex-direction:column;">
-    <div class="hero-stat" style="padding-top:4rem;">
+    <div class="hero-stat" style="padding-top:2.5rem;">
       <div class="stat-l">Regionen</div>
       <div class="stat-n">{{ main_posts | map: "region" | uniq | size }}</div>
     </div>
@@ -298,8 +291,8 @@ layout: null
       <div class="stat-n">{{ main_posts | size }}</div>
     </div>
     <div class="hero-stat">
-     <div class="stat-n">{{ total_photos }}</div>
-      <div class="stat-n">{{ main_posts | map: "photo_count" | compact | sum }}</div>
+      <div class="stat-l">Fotos</div>
+      <div class="stat-n">{{ total_photos }}</div>
     </div>
     <div class="hero-blue-block">
       <p class="hero-blue-text">Eigentlich wollte ich<br>nur meine Fotos sortieren.</p>
@@ -315,15 +308,6 @@ layout: null
     </div>
   </div>
 </section>
-
-<div class="image-strip">
-  {% for post in main_posts limit:4 %}
-  <a href="{{ site.baseurl }}{{ post.url }}" class="strip-img" style="text-decoration:none;">
-    <div class="strip-img-inner" style="{% if post.cover_image %}background-image: url('{{ site.baseurl }}/assets/images/{{ post.cover_image }}'); background-size: cover; background-position: {{ post.cover_position | default: 'center 60%' }};{% else %}background: linear-gradient(160deg, {{ post.cover_color | default: '#a8c4d4' }}, {{ post.cover_color_dark | default: '#5a90aa' }});{% endif %}"></div>
-    <div class="strip-label">{{ post.title }} — {{ post.date | date: "%b %Y" }}</div>
-  </a>
-  {% endfor %}
-</div>
 
 <div class="section-row" id="karte">
   <div class="section-sidebar">
