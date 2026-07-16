@@ -132,6 +132,17 @@ collections:
         time_format: false
         picker_utc: true
       - { label: "Tag-Nummer", name: "day_number", widget: "number", value_type: "int" }
+      - label: "Headerbild"
+        name: "cover_image"
+        widget: "image"
+        required: false
+        hint: "Erscheint als Hintergrundbild oben im Beitrag"
+      - label: "Bildposition"
+        name: "cover_position"
+        widget: "string"
+        required: false
+        default: "center 60%"
+        hint: "CSS object-position, z.B. 'center 60%'"
       - { label: "Ort", name: "location", widget: "string", required: false }
       - { label: "Wetter", name: "weather", widget: "string", required: false }
       - { label: "Highlight des Tages", name: "highlight", widget: "string", required: false }
