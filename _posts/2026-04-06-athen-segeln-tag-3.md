@@ -2,16 +2,19 @@
 layout: day
 type: day
 trip_id: slow-sailing-club
-trip_title: "Slow (bzw. eher No) Sailing Club"
-title: "Methana — Hoch hinaus"
+trip_title: Slow Sailing Club
+title: Methana — Hoch hinaus
 date: 2026-04-06
 day_number: 3
 location: Methana
-weather: "leicht bewölkt, 22°C"
-highlight: "die Segel-Panne im Mast"
+weather: leicht bewölkt, 22°C
+highlight: die Segel-Panne im Mast
 lat: 37.580556
 lng: 23.392778
-tags: [Segelpanne, Methana, Team]
+tags:
+  - Segelpanne
+  - Methana
+  - Team
 ---
 Nach einem kleinen Sonnenaufgangsspaziergang und einem Frühstück im Hafen ging es für uns wieder Richtung offene See. Diesmal mit der Hoffnung auf mehr Wind.
 
