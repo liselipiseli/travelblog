@@ -102,8 +102,18 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{fields.trip_id}}-tag-{{fields.day_number}}"
     preview_path: "{{year}}/{{month}}/{{day}}/{{trip_id}}-tag-{{day_number}}/"
     filter: { field: "type", value: "day" }
-    summary: "Tag {{day_number}} — {{title}}"
+    summary: "{{trip_title}} — Tag {{day_number}} — {{title}}"
     sortable_fields: ["date", "day_number", "title"]
+    view_groups:
+      - label: "Nach Reise"
+        field: trip_title
+    view_filters:
+      - label: "Athen"
+        field: trip_id
+        pattern: "athen"
+      - label: "Slow Sailing Club"
+        field: trip_id
+        pattern: "slow-sailing-club"
     fields:
       - { label: "Layout", name: "layout", widget: "hidden", default: "day" }
       - { label: "Typ", name: "type", widget: "hidden", default: "day" }
