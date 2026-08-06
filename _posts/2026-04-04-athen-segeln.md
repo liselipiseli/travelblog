@@ -18,4 +18,4 @@ cover_color: "#3d6b8a"
 cover_color_dark: "#173347"
 cover_image: img_0729.jpeg
 ---
-Nach der Stadt kam das Meer. Eine Woche mit **Sweet Sue 2,** unserem 14 Meter langen Segelboot, ziemlich wenig Wind und einer Crew, mit mehr oder weniger vorhandener Segelerfahrung.
+Nach der Stadt kam das Meer. Eine Woche mit **Sweet Sue 2,** unserem 14 Meter langen Segelboot, ziemlich wenig Wind und einer Crew, mit mehr oder weniger Segelerfahrung.
