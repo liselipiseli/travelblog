@@ -1,3 +1,24 @@
+---
+layout: day
+type: day
+trip_id: slow-sailing-club
+trip_title: Slow Sailing Club
+title: Alimos — Segeltour startet
+date: 2026-04-04
+day_number: 1
+location: Alimos
+weather: leicht bewölkt, 16°C
+highlight: das Boot wirklich bekommen zu haben
+lat: 37.9125
+lng: 23.702222
+tags:
+  - bigboatenergy
+images:
+  - 2026-04-04_museum.jpg
+  - 2026-04-04_fab-am-hafen.jpg
+  - 2026-04-04_sonnenuntergang.jpg
+  - 2026-04-04_bar-abend.jpg
+---
 Nachdem wir schon vormittags aus unserem Airbnb rausmusste, machten wir einen spontanen Plan die Zeit nicht am Hafen zu verbringen und dort mit unseren Sachen zu warten bis wir aufs Boot können, sondern lieber noch etwas zu erleben. Also fragten wir bei Xing nach, ob wir unsere Koffer und Taschen in seiner Wohnung lassen können. War ok. Also sind wir ins Museum. Basil & Elise Goulandris Foundation. Mal wieder ein wenig Picasso:
 
 ![Kein Picasso, aber tolle Farben.]({{ site.baseurl }}/assets/images/2026-04-04_museum.jpg "Kein Picasso, aber tolle Farben.")
