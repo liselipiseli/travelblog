@@ -12,7 +12,7 @@ highlight: das Boot wirklich bekommen zu haben
 lat: 37.9125
 lng: 23.702222
 tags:
-  - BigBoatEnergy
+  - bigboatenergy
 images:
   - img_2037.jpeg
   - img_1638.jpg
