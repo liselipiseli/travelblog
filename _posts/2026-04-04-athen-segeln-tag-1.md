@@ -1,4 +1,4 @@
----
+--- 
 layout: day
 type: day
 trip_id: slow-sailing-club
