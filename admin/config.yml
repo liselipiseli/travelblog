@@ -6,7 +6,7 @@ backend:
 publish_mode: editorial_workflow
 
 media_folder: "assets/images"
-public_folder: ""
+public_folder: "/travelblog/assets/images"
 
 slug:
   encoding: "ascii"
@@ -75,6 +75,8 @@ collections:
         name: "cover_image"
         widget: "image"
         required: false
+        media_folder: "/assets/images"
+        public_folder: ""
         hint: "Wird automatisch nach assets/images hochgeladen"
       - label: "Bildposition"
         name: "cover_position"
@@ -146,6 +148,8 @@ collections:
         name: "cover_image"
         widget: "image"
         required: false
+        media_folder: "/assets/images"
+        public_folder: ""
         hint: "Erscheint als Hintergrundbild oben im Beitrag"
       - label: "Bildposition"
         name: "cover_position"
@@ -178,5 +182,10 @@ collections:
         widget: "list"
         required: false
         hint: "Diese Bilder erscheinen in der Galerie der Reise-Übersicht"
-        field: { label: "Bild", name: "image", widget: "image" }
+        field:
+          label: "Bild"
+          name: "image"
+          widget: "image"
+          media_folder: "/assets/images"
+          public_folder: ""
       - { label: "Haupttext", name: "body", widget: "markdown" }
