@@ -390,10 +390,10 @@ layout: null
           {% endfor %}
         </div>
         {% if all_images.size > 4 %}
-        <button class="gallery-show-more" onclick="showMore('{{ post.trip_id }}', this)">
-          Alle {{ all_images.size }} Bilder anzeigen ↓
-        </button>
-        {% endif %}
+<button class="gallery-show-more" data-expanded="false" data-show-label="Alle {{ all_images.size }} Bilder anzeigen ↓" data-hide-label="Weniger anzeigen ↑" onclick="toggleGallery('{{ post.trip_id }}', this)">
+  Alle {{ all_images.size }} Bilder anzeigen ↓
+</button>
+{% endif %}
       </div>
       {% elsif post.cover_image %}
       <div class="gallery-trip-block">
@@ -558,11 +558,13 @@ function filterRegion(region, btn) {
 }
 
 // GALERIE LIGHTBOX
-function showMore(tripId, btn) {
-  document.querySelectorAll(`.gal-item[data-trip="${tripId}"]`).forEach(el => {
-    el.classList.remove('hidden-img');
+function toggleGallery(tripId, btn) {
+  const expanded = btn.dataset.expanded === "true";
+  document.querySelectorAll(`.gal-item[data-trip="${tripId}"]`).forEach((el, i) => {
+    if (i >= 4) el.classList.toggle('hidden-img', expanded);
   });
-  btn.remove();
+  btn.dataset.expanded = (!expanded).toString();
+  btn.textContent = expanded ? btn.dataset.showLabel : btn.dataset.hideLabel;
 }
 
 document.addEventListener('click', e => {
