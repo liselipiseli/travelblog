@@ -33,8 +33,7 @@ images:
 Um 9 Uhr am nächsten Morgen ging es dann los. Das erste Mal raus aufs Meer. 
 
 Safety first. Deswegen Schwimmwesten an, bei den beiden Kapitänen weiß man auch nie...
-
-![](2026-04-05_schwimmwestchen.jpg "Schwimmwesten können Leben retten!")
+![Schwimmwesten können Leben retten!]({{ site.baseurl }}/assets/images/2026-04-05_schwimmwestchen.jpg) Schwimmwesten können Leben retten!
 
 So ließen wir Athen hinter uns. Und unsere Reise führte uns...
 
